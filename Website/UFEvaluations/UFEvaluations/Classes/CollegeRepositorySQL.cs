@@ -5,34 +5,34 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-public class CategoryRepositorySQL : ICategoryRepository<Category>
+public class CollegeRepositorySQL : ICollegeRepository<College>
 {
-    private static CategoryRepositorySQL instance;
+    private static CollegeRepositorySQL instance;
     private static readonly string connectionString = ConfigurationManager.ConnectionStrings["ConnectionStringSQL"].ConnectionString;
 
-    private CategoryRepositorySQL() { }
+    private CollegeRepositorySQL() { }
 
-    public static CategoryRepositorySQL Instance
+    public static CollegeRepositorySQL Instance
     {
         get
         {
             if (instance == null)
-                instance = new CategoryRepositorySQL();
+                instance = new CollegeRepositorySQL();
 
             return instance;
         }
     }
 
-    public List<Category> listAll()
+    public List<College> listAll()
     {
-        List<Category> categories = new List<Category>();
+        List<College> colleges = new List<College>();
 
         try
         {
             SqlConnection conn = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand();
 
-            cmd.CommandText = "Select id, name FROM Categories;";
+            cmd.CommandText = "Select id, name FROM Colleges;";
             cmd.Connection = conn;
 
             conn.Open();
@@ -41,11 +41,11 @@ public class CategoryRepositorySQL : ICategoryRepository<Category>
 
             while (rdr.Read())
             {
-                Category thisCategory = new Category();
-                thisCategory.categoryID = Convert.ToInt32(rdr[0]);
-                thisCategory.name = (string)rdr[1];
+                College thisCollege = new College();
+                thisCollege.collegeID = Convert.ToInt32(rdr[0]);
+                thisCollege.name = (string)rdr[1];
 
-                categories.Add(thisCategory);
+                colleges.Add(thisCollege);
             }
 
             conn.Close();
@@ -55,6 +55,6 @@ public class CategoryRepositorySQL : ICategoryRepository<Category>
 
         }
 
-        return categories;
+        return colleges;
     }
 }

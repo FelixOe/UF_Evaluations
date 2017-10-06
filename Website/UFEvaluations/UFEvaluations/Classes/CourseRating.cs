@@ -13,5 +13,5 @@ public class CourseRating
     public int responses { get; set; }
     public int classSize { get; set; }
     public string term { get; set; }
-    List<Rating> ratings { get; set; }
+    public List<Rating> ratings { get; set; }
 }

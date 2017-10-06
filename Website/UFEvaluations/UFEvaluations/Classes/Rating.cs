@@ -9,4 +9,5 @@ public class Rating
     public double averageRating { get; set; }
     public int courseRatingID { get; set; }
     public double standardDeviation { get; set; }
+    public int categoryID { get; set; }
 }

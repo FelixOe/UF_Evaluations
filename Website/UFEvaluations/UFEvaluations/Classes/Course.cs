@@ -10,4 +10,11 @@ public class Course
     public string title { get; set; }
     public string code { get; set; }
     public int departmentID { get; set; }
+
+    public static Course getByID(int courseID)
+    {
+        ICourseRepository<Course> CourseRepo = CourseRepositorySQL.Instance;
+
+        return CourseRepo.getCourseByID(courseID);
+    }
 }
