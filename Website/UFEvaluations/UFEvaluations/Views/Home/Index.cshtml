@@ -2,12 +2,90 @@
     ViewBag.Title = "Home Page";
 }
 
-<div>
-    <h1>UF Evaluations</h1>
+<h1>UF Evaluations</h1>
+<div class="row">
+    <div class="col-md-8">
+        <div class="searchbox">
+            <h2>Search</h2>
+            <form name="mainSearchForm" class="form-horizontal form-padding">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="instructorName" class="form-label">Instructor name</label>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <input class="form-control pull-right" type="text" value="" id="instructorName">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="course" class="form-label">Course title/code</label>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <input class="form-control pull-right" type="text" value="" id="course">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="departmentName" class="form-label">Department name</label>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <input class="form-control pull-right" type="text" value="" id="departmentName">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="collegeName" class="form-label">College name</label>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <input class="form-control pull-right" type="text" value="" id="collegeName">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <input class="form-control btn btn-default btn-blue pull-right" type="submit" value="Search" id="collegeName">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="top-box">
+            <h3>Top 5 Courses</h3>
 
+        </div>
+    </div>
 </div>
 
-<div class="row" style="height: 700px;">
+<div class="top-area">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="top-box">
+                <h3>Top 5 Instructors</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="top-box">
+                <h3>Top 5 Departments</h3>
 
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="top-box">
+                <h3>Top 5 Colleges</h3>
 
+            </div>
+        </div>
+    </div>
 </div>

@@ -3,6 +3,14 @@
     padding-bottom: 20px;
 }
 
+h2 {
+    margin: 0px;
+}
+
+h3 {
+    margin: 0px;
+}
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -14,13 +22,6 @@
 */
 .dl-horizontal dt {
     white-space: normal;
-}
-
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
 }
 
 .navbar {
@@ -44,7 +45,7 @@ textarea {
 }
 
 .search-textbox {
-    width: 250px !important;
+    width: 280px !important;
 }
 
 .navbar-inverse .navbar-brand {
@@ -61,4 +62,24 @@ textarea {
     background-color: #eee;
     padding: 30px;
     border-radius: 6px;
+}
+
+.form-padding {
+    padding-top: 10px;
+}
+
+.searchbox {
+    background-color: #BBBBBB;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.top-area {
+    margin-top: 20px;
+}
+
+.top-box {
+    border-radius: 5px;
+    background-color: #BBBBBB;
+    padding: 10px;
 }
