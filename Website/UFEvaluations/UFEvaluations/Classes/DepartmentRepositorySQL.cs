@@ -32,7 +32,7 @@ public class DepartmentRepositorySQL : IDepartmentRepository<Department>
             SqlConnection conn = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand();
 
-            cmd.CommandText = "Select id, name, college_id FROM Deparments;";
+            cmd.CommandText = "Select id, name, college_id FROM Departments;";
             cmd.Connection = conn;
 
             conn.Open();

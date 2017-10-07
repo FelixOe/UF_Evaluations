@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -30,48 +31,35 @@ public class CourseRatingRepositorySQL : ICourseRatingRepository<CourseRating>
         try
         {
             SqlConnection conn = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand();
 
-            cmd.CommandText = @"Select CourseRatings.id AS course_rating_id, CourseRatings.course_id, CourseRatings.instructor_id, CourseRatings.section, CourseRatings.semester, CourseRatings.responses,
+            string query = @"Select CourseRatings.id AS course_rating_id, CourseRatings.course_id, CourseRatings.instructor_id, CourseRatings.section, CourseRatings.semester, CourseRatings.responses,
                             CourseRatings.class_size, CourseRatings.term, Scores.id, Scores.score, Scores.st_dev, Scores.category_id FROM CourseRatings
                             JOIN Scores ON CourseRatings.id = Scores.course_rating_id
                             WHERE Scores.category_id = @category_id;";
-            cmd.Parameters.AddWithValue("@category_id", categoryID);
-            cmd.Connection = conn;
 
-            conn.Open();
+            SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
+            adapter.SelectCommand.Parameters.AddWithValue("@category_id", categoryID);
 
-            SqlDataReader rdr = cmd.ExecuteReader();
+            DataTable courseRatingsTable = new DataTable();
+            adapter.Fill(courseRatingsTable);
 
-            while (rdr.Read())
-            {
-                if (!courseRatings.Select(p => p.courseRatingID).Contains(Convert.ToInt32(rdr[0])))
-                {
-                    CourseRating thisCourseRating = new CourseRating();
-                    thisCourseRating.courseRatingID = Convert.ToInt32(rdr[0]);
-                    thisCourseRating.courseID = Convert.ToInt32(rdr[1]);
-                    thisCourseRating.instructorID = Convert.ToInt32(rdr[2]);
-                    thisCourseRating.section = (string)rdr[3];
-                    thisCourseRating.semester = (string)rdr[4];
-                    thisCourseRating.responses = Convert.ToInt32(rdr[5]);
-                    thisCourseRating.classSize = Convert.ToInt32(rdr[6]);
-                    thisCourseRating.term = (string)rdr[7];
-                    thisCourseRating.ratings = new List<Rating>();
-
-                    courseRatings.Add(thisCourseRating);
-                }
-
-                Rating thisRating = new Rating();
-                thisRating.courseRatingID = Convert.ToInt32(rdr[0]);
-                thisRating.ratingID = Convert.ToInt32(rdr[8]);
-                thisRating.averageRating = Convert.ToDouble(rdr[9]);
-                thisRating.standardDeviation = Convert.ToDouble(rdr[10]);
-                thisRating.categoryID = Convert.ToInt32(rdr[11]);
-
-                courseRatings.Where(p => p.courseRatingID == thisRating.courseRatingID).FirstOrDefault().ratings.Add(thisRating);
-            }
-
-            conn.Close();
+            courseRatings = courseRatingsTable.AsEnumerable().Select(p => new CourseRating {
+                courseRatingID = Convert.ToInt32(p.ItemArray[0].ToString()),
+                courseID = Convert.ToInt32(p.ItemArray[1].ToString()),
+                instructorID = Convert.ToInt32(p.ItemArray[2].ToString()),
+                section = p.ItemArray[3].ToString(),
+                semester = p.ItemArray[4].ToString(),
+                responses = Convert.ToInt32(p.ItemArray[5].ToString()),
+                classSize = Convert.ToInt32(p.ItemArray[6].ToString()),
+                term = p.ItemArray[7].ToString(),
+                ratings = new List<Rating>() { new Rating {
+                    courseRatingID = Convert.ToInt32(p.ItemArray[0].ToString()),
+                    ratingID = Convert.ToInt32(p.ItemArray[8].ToString()),
+                    averageRating = Convert.ToDouble(p.ItemArray[9].ToString()),
+                    standardDeviation = Convert.ToDouble(p.ItemArray[10].ToString()),
+                    categoryID = Convert.ToInt32(p.ItemArray[11].ToString())
+                } }
+            }).ToList();
         }
         catch (Exception ex)
         {

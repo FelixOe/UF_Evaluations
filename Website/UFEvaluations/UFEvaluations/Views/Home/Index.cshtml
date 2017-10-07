@@ -1,4 +1,6 @@
-﻿@{
+﻿@model UFEvaluations.Models.HomeViewModel
+
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -62,8 +64,13 @@
     </div>
     <div class="col-md-4">
         <div class="top-box">
-            <h3>Top 5 Courses</h3>
-
+            <h3>Top 10 Courses by Enrollment</h3>
+            <ul>
+                @foreach (var course in Model.topCourses)
+                {
+                    <li>@course.code - @course.title</li>
+                }
+            </ul>
         </div>
     </div>
 </div>

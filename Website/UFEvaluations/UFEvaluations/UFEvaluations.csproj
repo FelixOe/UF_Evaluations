@@ -163,6 +163,7 @@
     <Compile Include="Classes\Instructor.cs" />
     <Compile Include="Classes\InstructorRepositorySQL.cs" />
     <Compile Include="Classes\Rating.cs" />
+    <Compile Include="Classes\StaticData.cs" />
     <Compile Include="Controllers\CollegesController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\DepartmentsController.cs" />
@@ -171,6 +172,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -226,7 +228,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
     <Folder Include="Views\Courses\" />
     <Folder Include="Views\Departments\" />
     <Folder Include="Views\Instructors\" />

@@ -16,6 +16,14 @@ namespace UFEvaluations
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            //Load static data
+            StaticData.categoryList = CategoryRepositorySQL.Instance.listAll();
+            StaticData.courseList = CourseRepositorySQL.Instance.listAll();
+            StaticData.instructorList = InstructorRepositorySQL.Instance.listAll();
+            StaticData.departmentList = DepartmentRepositorySQL.Instance.listAll();
+            StaticData.collegeList = CollegeRepositorySQL.Instance.listAll();
+            StaticData.overallRatingsList = CourseRatingRepositorySQL.Instance.listAllByCategory(10);
         }
     }
 }
