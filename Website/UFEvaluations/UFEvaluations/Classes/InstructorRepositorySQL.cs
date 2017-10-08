@@ -43,8 +43,8 @@ public class InstructorRepositorySQL : IInstructorRepository<Instructor>
             {
                 Instructor thisInstructor = new Instructor();
                 thisInstructor.instructorID = Convert.ToInt32(rdr[0]);
-                thisInstructor.lastName = (string)rdr[1];
-                thisInstructor.firstName = (string)rdr[2];
+                thisInstructor.lastName = (string)rdr[2];
+                thisInstructor.firstName = (string)rdr[3];
 
                 instructors.Add(thisInstructor);
             }
@@ -234,8 +234,8 @@ public class InstructorRepositorySQL : IInstructorRepository<Instructor>
             {
                 Instructor thisInstructor = new Instructor();
                 thisInstructor.instructorID = Convert.ToInt32(rdr[0]);
-                thisInstructor.lastName = (string)rdr[1];
-                thisInstructor.firstName = (string)rdr[2];
+                thisInstructor.lastName = (string)rdr[2];
+                thisInstructor.firstName = (string)rdr[3];
 
                 instructors.Add(thisInstructor);
             }

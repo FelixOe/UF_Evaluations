@@ -12,19 +12,78 @@ namespace UFEvaluations.Controllers
         public ViewResult Index()
         {
             HomeViewModel viewModel = new HomeViewModel();
-            viewModel.topColleges = StaticData.collegeList.Take(5).ToList();
-
             string currentYear = DateTime.Now.Year.ToString();
-            List<CourseRating> courseRatingsCurrentYear = StaticData.overallRatingsList.Where(p => p.semester.Contains(currentYear)).ToList();
+            List<CourseRating> courseRatingsCurrentYear = StaticData.overallRatingsList.Where(p => p.semester.Contains(currentYear) && p.classSize >= p.responses).ToList();
 
+            //Get top 10 courses by enrollment
             var topcoursesList = courseRatingsCurrentYear.Select(t => t.courseID).Distinct().Select(p => new {
                 courseID = p,
                 enrollment = courseRatingsCurrentYear.Where(x => x.courseID == p).Select(y => y.classSize).Sum(z => z)
         }).OrderByDescending(s => s.enrollment).Take(10).ToList();
 
-            viewModel.topCourses = topcoursesList.Select(p => StaticData.courseList.Where(x => x.courseID == p.courseID).FirstOrDefault()).ToList();
-            viewModel.topDepartments = StaticData.departmentList.Take(5).ToList();
-            viewModel.topInstructors = StaticData.instructorList.Take(5).ToList();
+            viewModel.topCourses = topcoursesList.Select(p => StaticData.courseList.Where(x => x.courseID == p.courseID).FirstOrDefault())
+                .Select(x => new KeyValuePair<string, string>(x.code + " - " + x.title, topcoursesList.Where(y => y.courseID == x.courseID).FirstOrDefault().enrollment.ToString()))
+                .ToList();
+
+            //Get top 20 instructors by overall rating
+            var topinstructorsList = courseRatingsCurrentYear.Select(t => t.instructorID).Distinct().Select(p =>
+            {
+                var responses = courseRatingsCurrentYear.Where(x => x.instructorID == p).Select(y => y.responses).Sum(z => z);
+                return new
+                {
+                    instructorID = p,
+                    responses = responses,
+                    rating = courseRatingsCurrentYear.Where(x => x.instructorID == p).Sum(z => ((double)z.responses / (double)responses) * z.ratings[0].averageRating),
+                };
+            }).Where(u => u.responses > 50).OrderByDescending(s => s.rating).Take(20).ToList();
+            
+            viewModel.topInstructors = topinstructorsList.Select(p => StaticData.instructorList.Where(x => x.instructorID == p.instructorID).FirstOrDefault())
+                .Select(x => new KeyValuePair<string, string>(x.firstName + " " + x.lastName, topinstructorsList.Where(y => y.instructorID == x.instructorID).FirstOrDefault().rating.ToString("#.##")))
+                .ToList();
+
+            //Get top 20 departments by overall rating
+            var courseRatingsCurrentYearDept = courseRatingsCurrentYear.Join(StaticData.courseList, prim => prim.courseID, fore => fore.courseID,
+    (prim, fore) => new { fore.departmentID, prim.classSize, prim.responses, prim.ratings });
+
+            var departmentList = StaticData.departmentList.Select(t => t.departmentID).Select(p =>
+            {
+                var responses = courseRatingsCurrentYearDept.Where(x => x.departmentID == p).Select(y => y.responses).Sum(z => z);
+                return new
+                {
+                    departmentID = p,
+                    rating = courseRatingsCurrentYearDept
+                    .Where(x => x.departmentID == p).Sum(z => ((double)z.responses / (double)responses) * z.ratings[0].averageRating),
+                    responses = responses,
+                    classSizes = courseRatingsCurrentYearDept.Where(x => x.departmentID == p).Select(y => y.classSize).Sum(z => z),
+                    collegeID = StaticData.departmentList.Where(a => a.departmentID == p).FirstOrDefault().collegeID
+                };
+            }).ToList();
+
+            var topdepartmentsList = departmentList.Where(u => u.responses > 100).OrderByDescending(s => s.rating).Take(20).ToList();
+
+            viewModel.topDepartments = topdepartmentsList.Select(p => StaticData.departmentList.Where(x => x.departmentID == p.departmentID).FirstOrDefault())
+                .Select(x => new KeyValuePair<string, string>(x.name, topdepartmentsList.Where(y => y.departmentID == x.departmentID).FirstOrDefault().rating.ToString("#.##")))
+                .ToList();
+
+            //Get top 20 colleges by overall rating
+            var courseRatingsCurrentYearCol = courseRatingsCurrentYearDept.Join(StaticData.departmentList, prim => prim.departmentID, fore => fore.departmentID,
+(prim, fore) => new { fore.collegeID, prim.classSize, prim.responses, prim.ratings });
+
+            var topcollegesList = StaticData.collegeList.Select(t => t.collegeID).Select(p =>
+            {
+                var responses = courseRatingsCurrentYearCol.Where(x => x.collegeID == p).Select(y => y.responses).Sum(z => z);
+                return new
+                {
+                    collegeID = p,
+                    rating = courseRatingsCurrentYearCol
+                    .Where(x => x.collegeID == p).Sum(z => ((double)z.responses / (double)responses) * z.ratings[0].averageRating),
+                    responses = responses,
+                };
+            }).Where(u => u.responses > 100).OrderByDescending(s => s.rating).Take(20).ToList();
+
+            viewModel.topColleges = topcollegesList.Select(p => StaticData.collegeList.Where(x => x.collegeID == p.collegeID).FirstOrDefault())
+                .Select(x => new KeyValuePair<string, string>(x.name, topcollegesList.Where(y => y.collegeID == x.collegeID).FirstOrDefault().rating.ToString("#.##")))
+                .ToList();
 
             return View(viewModel);
         }
