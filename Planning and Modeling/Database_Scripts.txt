@@ -1,0 +1,116 @@
+CREATE TABLE Colleges(
+	id int,
+	name nvarchar,
+	primary key (id)
+);
+
+CREATE TABLE Departments(
+	id int primary key,
+	name nvarchar,
+	college_id int references dbo.Colleges(id)
+);
+
+CREATE TABLE Categories(
+	id int primary key,
+	name nvarchar
+);
+
+CREATE TABLE Courses(
+	id int primary key,
+	name nvarchar,
+	code nvarchar,
+	department_id int references Departments(id)
+);
+
+CREATE TABLE Instructors(
+	id int primary key,
+	full_name nvarchar,
+	last_name nvarchar,
+	first_name nvarchar
+);
+
+CREATE TABLE Scores(
+	id int primary key,
+	category_id int references Categories(id),
+	score numeric,
+	course_rating_id int references CourseRatings(id),
+	st_dev numeric
+);
+
+CREATE TABLE CourseRatings(
+	id int primary key,
+	course_id int references Courses(id),
+	instructor_id int references Instructors(id),
+	section varchar(10),
+	semester varchar(20),
+	responses int,
+	class_size int,
+	term varchar(20)
+);
+
+INSERT INTO Categories (name) VALUES ('Description of course objectives and assignments');
+INSERT INTO Categories (name) VALUES ('Communication of ideas and information');
+INSERT INTO Categories (name) VALUES ('Expression of expectations for performance in class');
+INSERT INTO Categories (name) VALUES ('Availability to assist students in or out of class');
+INSERT INTO Categories (name) VALUES ('Respect and concern for students');
+INSERT INTO Categories (name) VALUES ('Stimulation of interest in course');
+INSERT INTO Categories (name) VALUES ('Facilitation of learning');
+INSERT INTO Categories (name) VALUES ('NULL');
+INSERT INTO Categories (name) VALUES ('NULL');
+INSERT INTO Categories (name) VALUES ('Overall assessment of instructor');
+
+
+CREATE TABLE Colleges(
+	id int IDENTITY(1,1) primary key,
+	name nvarchar(100),
+);
+
+CREATE TABLE Departments(
+	id int IDENTITY(1,1) primary key,
+	name nvarchar(120),
+	college_id int references dbo.Colleges(id)
+);
+
+CREATE TABLE Categories(
+	id int IDENTITY(1,1) primary key,
+	name nvarchar(100)
+);
+
+CREATE TABLE Courses(
+	id int IDENTITY(1,1) primary key,
+	name nvarchar(100),
+	code nvarchar(30),
+	department_id int references Departments(id)
+);
+
+CREATE TABLE Instructors(
+	id int IDENTITY(1,1) primary key,
+	full_name nvarchar(120),
+	last_name nvarchar(70),
+	first_name nvarchar(70),
+	[key] nvarchar(70)
+);
+
+CREATE TABLE CourseRatings(
+	id int IDENTITY(1,1) primary key,
+	course_id int references Courses(id),
+	instructor_id int references Instructors(id),
+	section nvarchar(20),
+	semester nvarchar(40),
+	responses int,
+	class_size int,
+	term nvarchar(40)
+);
+
+CREATE TABLE Scores(
+	id int IDENTITY(1,1) primary key,
+	category_id int references Categories(id),
+	score float,
+	course_rating_id int references CourseRatings(id),
+	st_dev float
+);
+
+DROP TABLE Scores;
+DROP TABLE CourseRatings;
+DROP TABLE Instructors;
+DROP TABLE Courses;

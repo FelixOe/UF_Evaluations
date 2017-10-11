@@ -1,0 +1,61 @@
+﻿@model UFEvaluations.Models.CollegeDetailViewModel
+
+@{
+    ViewBag.Title = Model.college.name;
+}
+
+@section Scripts {
+    @Scripts.Render("~/ Scripts / jquery -{ version}.js")
+    @Scripts.Render("~/Scripts/loadDatatable.js")
+}
+
+<h1>@Model.college.name</h1>
+
+<div class="top-area">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="top-box">
+                <h3 class="text-center">All Instructors</h3>
+            </div>
+            <div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Instructor</th>
+                            <th>Department</th>
+                            <th>Last semester</th>
+                            <th>Overall rating</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Instructor</th>
+                            <th>Department</th>
+                            <th>Last semester</th>
+                            <th>Overall rating</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var instructor in Model.instructors)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.ActionLink(instructor.firstName + " " + instructor.lastName, "Detail", "InstructorsController", new { instructor = (instructor.firstName + instructor.lastName).Trim().ToLower() }, null)
+                                </td>
+                                <td>
+                                    @instructor.department
+                                </td>
+                                <td>
+                                    @instructor.lastSemester
+                                </td>
+                                <td>
+                                    @instructor.rating
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

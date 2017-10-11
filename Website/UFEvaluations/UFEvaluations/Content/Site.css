@@ -4,6 +4,11 @@
     font-family: 'Lato', sans-serif;
 }
 
+h1 {
+    margin: 0px;
+    font-family: 'Arvo', serif;
+}
+
 h2 {
     margin: 0px;
     font-family: 'Arvo', serif;
@@ -90,19 +95,19 @@ h3 {
     padding-top: 10px;
 }
 
-.top-box h3 {
-    padding-bottom: 10px;
-    color: #FFF;
-    margin-left: 10px;
-    margin-right: 10px;
-}
+    .top-box h3 {
+        padding-bottom: 10px;
+        color: #FFF;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
 
 .list-group-item {
     min-height: 30px;
 }
 
 .top-list {
-
 }
 
 .top-list-element {
