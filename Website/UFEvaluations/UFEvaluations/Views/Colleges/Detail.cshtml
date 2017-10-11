@@ -24,6 +24,9 @@
                             <th>Instructor</th>
                             <th>Department</th>
                             <th>Last semester</th>
+                            <th># of responses</th>
+                            <th># of students</th>
+                            <th>Response rate</th>
                             <th>Overall rating</th>
                         </tr>
                     </thead>
@@ -32,6 +35,9 @@
                             <th>Instructor</th>
                             <th>Department</th>
                             <th>Last semester</th>
+                            <th># of responses</th>
+                            <th># of students</th>
+                            <th>Response rate</th>
                             <th>Overall rating</th>
                         </tr>
                     </tfoot>
@@ -47,6 +53,15 @@
                                 </td>
                                 <td>
                                     @instructor.lastSemester
+                                </td>
+                                <td>
+                                    @instructor.responses
+                                </td>
+                                <td>
+                                    @instructor.students
+                                </td>
+                                <td>
+                                    @instructor.responseRate
                                 </td>
                                 <td>
                                     @instructor.rating

@@ -36,6 +36,7 @@ namespace UFEvaluations.Controllers
                 instructors = instructors.Select(p => {
                     var courseRatingInstructor = courseRatingsCurrentYear.Where(x => x.instructorID == p.instructorID);
                     var responses = courseRatingInstructor.Select(y => y.responses).Sum(z => z);
+                    var students = courseRatingInstructor.Select(y => y.classSize).Sum(z => z);
                     var semesters = courseRatingInstructor.Select(v =>
                     {
                         //TODO: Get correct order b/w Fall, Spring, and Summer
@@ -51,6 +52,9 @@ namespace UFEvaluations.Controllers
                         instructorID = p.instructorID,
                         firstName = p.firstName,
                         lastName = p.lastName,
+                        responses = responses.ToString(),
+                        students = students.ToString(),
+                        responseRate = ((double)responses/(double)students).ToString("p1"),
                         //TODO: Retrieve all departments for each instructor
                         department = StaticData.departmentList.Where(x => x.departmentID == instructorDeptMapping.Where(a => a.instructorID == p.instructorID).FirstOrDefault().departmentID).FirstOrDefault().name,
                         lastSemester = (semesters.Count() > 0 ? semesters.FirstOrDefault() : ""),
