@@ -20,6 +20,9 @@ namespace UFEvaluations
             //Load static data
             StaticData.categoryList = CategoryRepositorySQL.Instance.listAll();
             StaticData.courseList = CourseRepositorySQL.Instance.listAll();
+            StaticData.courseDeptMapping = new Dictionary<string, int>();
+            foreach (Course c in StaticData.courseList)
+                StaticData.courseDeptMapping.Add(c.courseID.ToString(), c.departmentID);
             StaticData.instructorList = InstructorRepositorySQL.Instance.listAll();
             StaticData.departmentList = DepartmentRepositorySQL.Instance.listAll();
             StaticData.collegeList = CollegeRepositorySQL.Instance.listAll();

@@ -1,0 +1,71 @@
+﻿@model UFEvaluations.Models.DepartmentListViewModel
+
+@{
+    ViewBag.Title = "Departments";
+}
+
+@section Scripts {
+    @Scripts.Render("~/ Scripts / jquery -{ version}.js")
+    @Scripts.Render("~/Scripts/loadDatatable.js")
+}
+
+<h1>Departments</h1>
+
+<div class="top-area">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="top-box">
+                <h3 class="text-center">All Departments</h3>
+            </div>
+            <div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Department</th>
+                            <th>College</th>
+                            <th># of responses</th>
+                            <th># of students</th>
+                            <th>Response rate</th>
+                            <th>Overall rating</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Department</th>
+                            <th>College</th>
+                            <th># of responses</th>
+                            <th># of students</th>
+                            <th>Response rate</th>
+                            <th>Overall rating</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var department in Model.departments)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.ActionLink(department.name, "Detail", "Departments", new { department = GlobalFunctions.escapeQuerystringElement(department.name) }, null)
+                                </td>
+                                <td>
+                                    @Html.ActionLink(department.collegeName, "Detail", "Colleges", new { college = GlobalFunctions.escapeQuerystringElement(department.collegeName) }, null)
+                                </td>
+                                <td>
+                                    @department.responses
+                                </td>
+                                <td>
+                                    @department.students
+                                </td>
+                                <td>
+                                    @department.responseRate
+                                </td>
+                                <td>
+                                    @department.rating
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

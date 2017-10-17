@@ -154,6 +154,7 @@
     <Compile Include="Classes\CourseRepositorySQL.cs" />
     <Compile Include="Classes\Department.cs" />
     <Compile Include="Classes\DepartmentRepositorySQL.cs" />
+    <Compile Include="Classes\GlobalFunctions.cs" />
     <Compile Include="Classes\ICategoryRepository.cs" />
     <Compile Include="Classes\ICollegeRepository.cs" />
     <Compile Include="Classes\ICourseRatingRepository.cs" />
@@ -174,6 +175,8 @@
     </Compile>
     <Compile Include="Models\CollegeDetailViewModel.cs" />
     <Compile Include="Models\CollegeListViewModel.cs" />
+    <Compile Include="Models\DepartmentDetailViewModel.cs" />
+    <Compile Include="Models\DepartmentListViewModel.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -233,11 +236,12 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Colleges\List.cshtml" />
     <Content Include="Views\Colleges\Detail.cshtml" />
+    <Content Include="Views\Departments\Detail.cshtml" />
+    <Content Include="Views\Departments\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Courses\" />
-    <Folder Include="Views\Departments\" />
     <Folder Include="Views\Instructors\" />
   </ItemGroup>
   <ItemGroup>

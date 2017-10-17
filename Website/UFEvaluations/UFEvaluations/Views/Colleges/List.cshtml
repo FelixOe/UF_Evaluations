@@ -14,7 +14,7 @@
                 <ul class="top-list list-group">
                     @foreach (var college in Model.colleges)
                     {
-                        <li class="top-list-element list-group-item"><span class="pull-left">@Html.ActionLink(college.Key, "Detail", "Colleges", new { college = college.Key }, null)</span><span class="pull-right">@college.Value</span></li>
+                        <li class="top-list-element list-group-item"><span class="pull-left">@Html.ActionLink(college.Key, "Detail", "Colleges", new { college = GlobalFunctions.escapeQuerystringElement(college.Key) }, null)</span><span class="pull-right">@college.Value</span></li>
                     }
                 </ul>
             </div>

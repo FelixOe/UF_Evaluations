@@ -7,6 +7,7 @@ public static class StaticData
 {
     public static List<Category> categoryList;
     public static List<Course> courseList;
+    public static Dictionary<string, int> courseDeptMapping;
     public static List<Instructor> instructorList;
     public static List<Department> departmentList;
     public static List<College> collegeList;

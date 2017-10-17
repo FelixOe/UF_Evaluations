@@ -13,9 +13,9 @@ namespace UFEvaluations.Controllers
         {
             CollegeDetailViewModel viewModel = new CollegeDetailViewModel();
 
-            if (Request.QueryString["college"] != null && StaticData.collegeList.Where(p => p.name.ToLower() == Request.QueryString["college"].ToString().ToLower()).Count() == 1)
+            if (Request.QueryString["college"] != null && StaticData.collegeList.Where(p => GlobalFunctions.escapeQuerystringElement(p.name) == GlobalFunctions.escapeQuerystringElement(Request.QueryString["college"].ToString())).Count() == 1)
             {
-                College college = StaticData.collegeList.Where(p => p.name.ToLower() == Request.QueryString["college"].ToString().ToLower()).FirstOrDefault();
+                College college = StaticData.collegeList.Where(p => GlobalFunctions.escapeQuerystringElement(p.name) == GlobalFunctions.escapeQuerystringElement(Request.QueryString["college"].ToString())).FirstOrDefault();
                 string currentYear = DateTime.Now.Year.ToString();
 
                 List<CourseRating> courseRatingsCurrentYear = StaticData.overallRatingsList.Where(p => p.semester.Contains(currentYear) && p.classSize >= p.responses).ToList();
