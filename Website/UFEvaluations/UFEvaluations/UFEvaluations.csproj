@@ -166,6 +166,7 @@
     <Compile Include="Classes\InstructorRepositorySQL.cs" />
     <Compile Include="Classes\OverallRating.cs" />
     <Compile Include="Classes\Rating.cs" />
+    <Compile Include="Classes\SemesterComparer.cs" />
     <Compile Include="Classes\StaticData.cs" />
     <Compile Include="Controllers\CollegesController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />

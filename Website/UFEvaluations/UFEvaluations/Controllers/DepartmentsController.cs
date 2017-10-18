@@ -44,16 +44,8 @@ namespace UFEvaluations.Controllers
                     var courseRatingInstructor = courseRatings.Where(x => x.instructorID == p.instructorID);
                     var responses = courseRatingInstructor.Select(y => y.responses).Sum(z => z);
                     var students = courseRatingInstructor.Select(y => y.classSize).Sum(z => z);
-                    var semesters = courseRatingInstructor.Select(v =>
-                    {
-                        //TODO: Get correct order b/w Fall, Spring, and Summer
-                        //TODO: Get the past 3 semesters, not just current year
-                        return new
-                        {
-                            year = Convert.ToInt32(v.semester.Split(' ')[0]),
-                            semester = v.semester.Split(' ')[1].ToString()
-                        };
-                    }).Distinct().OrderByDescending(t => t.year).Select(u => u.semester + " " + u.year);
+                    var semesters = courseRatingInstructor.Select(v => v.semester).Distinct()
+                        .OrderByDescending(t => t, new SemesterComparer());
                     return new Instructor
                     {
                         instructorID = p.instructorID,

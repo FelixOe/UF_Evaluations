@@ -67,7 +67,7 @@ namespace UFEvaluations.Controllers
                         rating = graphRatingsList
                             .Sum(z => ((double)z.responses / (double)graphResponses) * z.ratings.Where(e => e.categoryID == 10).FirstOrDefault().averageRating).ToString("#.##")
                     };
-                }).OrderBy(p => p.semester);
+                }).OrderBy(p => p.semester, new SemesterComparer());
 
                 instructorGraph.labels = "['" + String.Join("', '", data.Select(p => p.semester).ToArray()) + "']";
                 instructorGraph.data = "[" + String.Join(", ", data.Select(p => p.rating).ToArray()) + "]";
@@ -75,8 +75,8 @@ namespace UFEvaluations.Controllers
                 viewModel.instructor = instructor;
                 viewModel.overallRatings = overallRatings;
                 viewModel.courseRatingsAll = courseRatings;
-                viewModel.firstTerm = courseRatings.Select(v => Convert.ToInt32(v.semester.Split(' ')[0])).Distinct()
-                    .OrderBy(t => t).FirstOrDefault().ToString();
+                viewModel.firstTerm = courseRatings.Select(v => v.semester).Distinct()
+                    .OrderBy(t => t, new SemesterComparer()).FirstOrDefault().ToString();
                 viewModel.responsesAll = responses.ToString();
                 viewModel.studentsAll = students.ToString();
                 viewModel.departments = departments;
@@ -106,15 +106,8 @@ namespace UFEvaluations.Controllers
                 var courseRatingsList = courseRatings.Where(x => x.instructorID == p.instructorID);
                 var responses = courseRatingsList.Select(y => y.responses).Sum(z => z);
                 var students = courseRatingsList.Select(y => y.classSize).Sum(z => z);
-                var semesters = courseRatingsList.Select(v =>
-                {
-                    //TODO: Get correct order b/w Fall, Spring, and Summer
-                    return new
-                    {
-                        year = Convert.ToInt32(v.semester.Split(' ')[0]),
-                        semester = v.semester.Split(' ')[1].ToString()
-                    };
-                }).Distinct().OrderByDescending(t => t.year).Select(u => u.semester + " " + u.year);
+                var semesters = courseRatingsList.Select(v => v.semester).Distinct()
+                    .OrderByDescending(t => t, new SemesterComparer());
                 return new Instructor
                 {
                     instructorID = p.instructorID,
