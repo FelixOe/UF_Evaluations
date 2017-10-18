@@ -1,0 +1,68 @@
+﻿@model UFEvaluations.Models.InstructorListViewModel
+
+@{
+    ViewBag.Title = "All Instructors";
+}
+
+@section Scripts {
+    @Scripts.Render("~/ Scripts / jquery -{ version}.js")
+    @Scripts.Render("~/Scripts/loadDatatable.js")
+}
+
+<h1>All Instructors</h1>
+
+<div class="top-area">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Instructor</th>
+                            <th>Last semester</th>
+                            <th># of responses</th>
+                            <th># of students</th>
+                            <th>Response rate</th>
+                            <th>Overall rating</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Instructor</th>
+                            <th>Last semester</th>
+                            <th># of responses</th>
+                            <th># of students</th>
+                            <th>Response rate</th>
+                            <th>Overall rating</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var instructor in Model.instructors)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.ActionLink(instructor.firstName + " " + instructor.lastName, "Detail", "Instructors", new { instructor = GlobalFunctions.escapeQuerystringElement(instructor.firstName + instructor.lastName) }, null)
+                                </td>
+                                <td>
+                                    @instructor.lastSemester
+                                </td>
+                                <td>
+                                    @instructor.responses
+                                </td>
+                                <td>
+                                    @instructor.students
+                                </td>
+                                <td>
+                                    @instructor.responseRate
+                                </td>
+                                <td>
+                                    @instructor.rating
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

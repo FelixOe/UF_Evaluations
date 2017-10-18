@@ -26,6 +26,11 @@ namespace UFEvaluations
             StaticData.instructorList = InstructorRepositorySQL.Instance.listAll();
             StaticData.departmentList = DepartmentRepositorySQL.Instance.listAll();
             StaticData.collegeList = CollegeRepositorySQL.Instance.listAll();
+            StaticData.collegeList = StaticData.collegeList.Select(p => new College
+            {
+                collegeID = p.collegeID,
+                name = (p.name.ToLower().Contains("college") ? System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(p.name.ToLower()).Replace("Of", "of") : "College of " + System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(p.name.ToLower()))
+            }).ToList();
             StaticData.overallRatingsList = CourseRatingRepositorySQL.Instance.listAllByCategory(10);
 
             StaticData.termsToDisplay = new List<string>();

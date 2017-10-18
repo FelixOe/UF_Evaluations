@@ -1,0 +1,117 @@
+﻿@model UFEvaluations.Models.InstructorDetailViewModel
+
+@{
+    ViewBag.Title = Model.instructor.firstName + " " + Model.instructor.lastName;
+}
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/loadDatatable.js")
+    @Scripts.Render("~/Scripts/Chart.js")
+}
+
+<script type="text/javascript" defer="defer">
+    document.addEventListener("DOMContentLoaded", function (event) { @Html.Raw(ViewBag.loadChart) });
+</script>
+
+<div class="top-area">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-center">@Model.instructor.firstName @Model.instructor.lastName</h2>
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="row">
+                <h4>Overview</h4>
+                <br />
+                <div class="row"><div class="col-md-4">First year: </div><div class="col-md-8 text-right">@Model.firstTerm</div></div>
+                <div class="row"><div class="col-md-4"># of responses: </div><div class="col-md-8 text-right">@Model.responsesAll</div></div>
+                <div class="row"><div class="col-md-4"># of students: </div><div class="col-md-8 text-right">@Model.studentsAll</div></div>
+                <div class="row"><div class="col-md-4">Response rate: </div><div class="col-md-8 text-right">@Model.responseRateOverall</div></div>
+                <div class="row">
+                    <div class="col-md-4">Department: </div>
+                    <div class="col-md-8 text-right">
+                        @foreach (var dept in Model.departments)
+                        {
+                            @Html.ActionLink(dept, "Detail", "Departments", new { department = GlobalFunctions.escapeQuerystringElement(dept) }, null) <br />
+                        }
+                    </div>
+                </div>
+                <br />
+                <br />
+                <h4>Ratings</h4>
+                <ul class="top-list list-group">
+                    @foreach (var rating in Model.overallRatings)
+                    {
+                        <li class="top-list-element list-group-item"><span class="pull-left">@rating.category</span><span class="pull-right">@rating.rating</span></li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <h4>Overall rating over time</h4>
+            <canvas id="instructorChart" width="400" height="300"></canvas>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Courses</h4>
+            <br />
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Title</th>
+                            <th># of responses</th>
+                            <th># of students</th>
+                            <th>Response rate</th>
+                            <th>Overall rating</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Code</th>
+                            <th>Title</th>
+                            <th># of responses</th>
+                            <th># of students</th>
+                            <th>Response rate</th>
+                            <th>Overall rating</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var course in Model.courses)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.ActionLink(course.code, "Detail", "Courses", new { course = GlobalFunctions.escapeQuerystringElement(course.code) }, null)
+                                </td>
+                                <td>
+                                    @course.title
+                                </td>
+                                <td>
+                                    @course.responses
+                                </td>
+                                <td>
+                                    @course.students
+                                </td>
+                                <td>
+                                    @course.responseRate
+                                </td>
+                                <td>
+                                    @course.rating
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+        </div>
+    </div>
+</div>

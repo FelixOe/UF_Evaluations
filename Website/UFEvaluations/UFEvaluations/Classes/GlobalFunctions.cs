@@ -13,4 +13,35 @@ public static class GlobalFunctions
 
         return filteredString;
     }
+
+    public static string createChartScript(InstructorGraph data)
+    {
+        return @"var ctx = document.getElementById('instructorChart');
+        var instructorChart = new Chart(ctx, {
+        type: 'line',
+        data:
+        {
+            labels: " + data.labels + @",
+            datasets: [{
+                label: 'Ratings',
+                data: " + data.data + @",
+                borderWidth: 1,
+                backgroundColor: 'rgb(17, 102, 167, 0.5)',
+                borderColor: 'rgb(0, 85, 150)'
+            }]
+        },
+        options:
+        {
+            scales:
+            {
+                yAxes: [{
+                    ticks:
+                    {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });";
+    }
 }

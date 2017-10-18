@@ -162,7 +162,9 @@
     <Compile Include="Classes\IDepartmentRepository.cs" />
     <Compile Include="Classes\IInstructorRepository.cs" />
     <Compile Include="Classes\Instructor.cs" />
+    <Compile Include="Classes\InstructorGraph.cs" />
     <Compile Include="Classes\InstructorRepositorySQL.cs" />
+    <Compile Include="Classes\OverallRating.cs" />
     <Compile Include="Classes\Rating.cs" />
     <Compile Include="Classes\StaticData.cs" />
     <Compile Include="Controllers\CollegesController.cs" />
@@ -180,6 +182,8 @@
     <Compile Include="Models\DepartmentDetailViewModel.cs" />
     <Compile Include="Models\DepartmentListViewModel.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
+    <Compile Include="Models\InstructorDetailViewModel.cs" />
+    <Compile Include="Models\InstructorListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -207,6 +211,7 @@
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\datatables.js" />
     <Content Include="Scripts\datatables.min.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
@@ -242,10 +247,11 @@
     <Content Include="Views\Departments\List.cshtml" />
     <Content Include="Views\Courses\Detail.cshtml" />
     <Content Include="Views\Courses\List.cshtml" />
+    <Content Include="Views\Instructors\List.cshtml" />
+    <Content Include="Views\Instructors\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Instructors\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

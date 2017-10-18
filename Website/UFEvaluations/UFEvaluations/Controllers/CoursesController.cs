@@ -49,7 +49,6 @@ namespace UFEvaluations.Controllers
                     var semesters = courseRatingInstructor.Select(v =>
                     {
                         //TODO: Get correct order b/w Fall, Spring, and Summer
-                        //TODO: Get the past 3 semesters, not just current year
                         return new
                         {
                             year = Convert.ToInt32(v.semester.Split(' ')[0]),
