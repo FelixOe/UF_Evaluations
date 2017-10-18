@@ -9,15 +9,12 @@
 <div class="top-area">
     <div class="row">
         <div class="col-md-12">
-            <div class="top-box">
-                <h3 class="text-center">All Colleges</h3>
-                <ul class="top-list list-group">
-                    @foreach (var college in Model.colleges)
-                    {
-                        <li class="top-list-element list-group-item"><span class="pull-left">@Html.ActionLink(college.Key, "Detail", "Colleges", new { college = GlobalFunctions.escapeQuerystringElement(college.Key) }, null)</span><span class="pull-right">@college.Value</span></li>
-                    }
-                </ul>
-            </div>
+            <ul class="top-list list-group">
+                @foreach (var college in Model.colleges)
+                {
+                    <li class="top-list-element list-group-item"><span class="pull-left">@Html.ActionLink(college.Key, "Detail", "Colleges", new { college = GlobalFunctions.escapeQuerystringElement(college.Key) }, null)</span><span class="pull-right">@college.Value</span></li>
+                }
+            </ul>
         </div>
     </div>
 </div>

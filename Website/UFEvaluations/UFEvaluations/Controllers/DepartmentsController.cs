@@ -15,18 +15,23 @@ namespace UFEvaluations.Controllers
 
             if (Request.QueryString["department"] != null && StaticData.departmentList.Where(p => GlobalFunctions.escapeQuerystringElement(p.name) == GlobalFunctions.escapeQuerystringElement(Request.QueryString["department"].ToString())).Count() == 1)
             {
-                Department department = StaticData.departmentList.Where(p => GlobalFunctions.escapeQuerystringElement(p.name) == GlobalFunctions.escapeQuerystringElement(Request.QueryString["department"].ToString())).FirstOrDefault();
-                string currentYear = DateTime.Now.Year.ToString();
+                Department department = StaticData.departmentList
+                    .Where(p => GlobalFunctions.escapeQuerystringElement(p.name) == GlobalFunctions.escapeQuerystringElement(Request.QueryString["department"].ToString()))
+                    .FirstOrDefault();
 
-                List<CourseRating> courseRatingsCurrentYear = StaticData.overallRatingsList.Where(p => p.semester.Contains(currentYear) && p.classSize >= p.responses).ToList();
+                List<CourseRating> courseRatings = StaticData.overallRatingsList
+                    .Where(p => StaticData.termsToDisplay.Contains(p.semester) && p.classSize >= p.responses)
+                    .ToList();
 
                 //Filter only sections within the department (Not all ratings of a professor who had a course within that department)
-                courseRatingsCurrentYear = courseRatingsCurrentYear.Where(p => StaticData.courseDeptMapping[p.courseID.ToString()] == department.departmentID).ToList();
+                courseRatings = courseRatings.Where(p => StaticData.courseDeptMapping[p.courseID.ToString()] == department.departmentID).ToList();
 
-                List<Instructor> instructors = InstructorRepositorySQL.Instance.listByDepartment(department.departmentID).Where(p => courseRatingsCurrentYear.Select(u => u.instructorID).Distinct().Contains(p.instructorID)).ToList();
+                List<Instructor> instructors = InstructorRepositorySQL.Instance.listByDepartment(department.departmentID)
+                    .Where(p => courseRatings.Select(u => u.instructorID).Distinct().Contains(p.instructorID))
+                    .ToList();
 
                 var instructorDeptMapping = instructors.Select(p => {
-                    CourseRating firstRating = courseRatingsCurrentYear.Where(u => u.instructorID == p.instructorID).FirstOrDefault();
+                    CourseRating firstRating = courseRatings.Where(u => u.instructorID == p.instructorID).FirstOrDefault();
                     var dept = StaticData.courseList.Where(t => t.courseID == firstRating.courseID).FirstOrDefault().departmentID;
                     return new
                     {
@@ -36,7 +41,7 @@ namespace UFEvaluations.Controllers
                 }).ToList();
 
                 instructors = instructors.Select(p => {
-                    var courseRatingInstructor = courseRatingsCurrentYear.Where(x => x.instructorID == p.instructorID);
+                    var courseRatingInstructor = courseRatings.Where(x => x.instructorID == p.instructorID);
                     var responses = courseRatingInstructor.Select(y => y.responses).Sum(z => z);
                     var students = courseRatingInstructor.Select(y => y.classSize).Sum(z => z);
                     var semesters = courseRatingInstructor.Select(v =>
@@ -74,10 +79,12 @@ namespace UFEvaluations.Controllers
         public ActionResult List()
         {
             DepartmentListViewModel viewModel = new DepartmentListViewModel();
-            string currentYear = DateTime.Now.Year.ToString();
-            List<CourseRating> courseRatingsCurrentYear = StaticData.overallRatingsList.Where(p => p.semester.Contains(currentYear) && p.classSize >= p.responses).ToList();
 
-            var courseRatingsCurrentYearDept = courseRatingsCurrentYear.Select(p => {
+            List<CourseRating> courseRatings = StaticData.overallRatingsList
+                .Where(p => StaticData.termsToDisplay.Contains(p.semester) && p.classSize >= p.responses)
+                .ToList();
+
+            var courseRatingsDept = courseRatings.Select(p => {
                 var result = new {
                     departmentID = StaticData.courseDeptMapping[p.courseID.ToString()],
                     classSize = p.classSize,
@@ -88,19 +95,17 @@ namespace UFEvaluations.Controllers
                 return result;
             });
 
-            //TODO: Wrong students/responses count on List page!
-
             List<Department> departments = StaticData.departmentList.Select(p =>
             {
-                var responses = courseRatingsCurrentYearDept.Where(x => x.departmentID == p.departmentID).Select(y => y.responses).Sum(z => z);
-                var students = courseRatingsCurrentYearDept.Where(x => x.departmentID == p.departmentID).Select(y => y.classSize).Sum(z => z);
+                var responses = courseRatingsDept.Where(x => x.departmentID == p.departmentID).Select(y => y.responses).Sum(z => z);
+                var students = courseRatingsDept.Where(x => x.departmentID == p.departmentID).Select(y => y.classSize).Sum(z => z);
                 return new Department
                 {
                     name = p.name,
                     collegeID = p.collegeID,
                     departmentID = p.departmentID,
                     collegeName = StaticData.collegeList.Where(u => u.collegeID == p.collegeID).FirstOrDefault().name,
-                    rating = courseRatingsCurrentYearDept
+                    rating = courseRatingsDept
                     .Where(x => x.departmentID == p.departmentID).Sum(z => ((double)z.responses / (double)responses) * z.ratings[0].averageRating).ToString("#.##"),
                     responses = responses.ToString(),
                     students = students.ToString(),

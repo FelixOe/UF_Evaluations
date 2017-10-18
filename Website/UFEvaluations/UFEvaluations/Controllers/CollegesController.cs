@@ -15,15 +15,20 @@ namespace UFEvaluations.Controllers
 
             if (Request.QueryString["college"] != null && StaticData.collegeList.Where(p => GlobalFunctions.escapeQuerystringElement(p.name) == GlobalFunctions.escapeQuerystringElement(Request.QueryString["college"].ToString())).Count() == 1)
             {
-                College college = StaticData.collegeList.Where(p => GlobalFunctions.escapeQuerystringElement(p.name) == GlobalFunctions.escapeQuerystringElement(Request.QueryString["college"].ToString())).FirstOrDefault();
-                string currentYear = DateTime.Now.Year.ToString();
+                College college = StaticData.collegeList
+                    .Where(p => GlobalFunctions.escapeQuerystringElement(p.name) == GlobalFunctions.escapeQuerystringElement(Request.QueryString["college"].ToString()))
+                    .FirstOrDefault();
 
-                List<CourseRating> courseRatingsCurrentYear = StaticData.overallRatingsList.Where(p => p.semester.Contains(currentYear) && p.classSize >= p.responses).ToList();
+                List<CourseRating> courseRatings = StaticData.overallRatingsList
+                    .Where(p => StaticData.termsToDisplay.Contains(p.semester) && p.classSize >= p.responses)
+                    .ToList();
 
-                List<Instructor> instructors = InstructorRepositorySQL.Instance.listByCollege(college.collegeID).Where(p => courseRatingsCurrentYear.Select(u => u.instructorID).Distinct().Contains(p.instructorID)).ToList();
+                List<Instructor> instructors = InstructorRepositorySQL.Instance.listByCollege(college.collegeID)
+                    .Where(p => courseRatings.Select(u => u.instructorID).Distinct().Contains(p.instructorID))
+                    .ToList();
 
                 var instructorDeptMapping = instructors.Select(p => {
-                    CourseRating firstRating = courseRatingsCurrentYear.Where(u => u.instructorID == p.instructorID).FirstOrDefault();
+                    CourseRating firstRating = courseRatings.Where(u => u.instructorID == p.instructorID).FirstOrDefault();
                     var dept = StaticData.courseList.Where(t => t.courseID == firstRating.courseID).FirstOrDefault().departmentID;
                     return new
                     {
@@ -34,7 +39,7 @@ namespace UFEvaluations.Controllers
 
                 //Add department
                 instructors = instructors.Select(p => {
-                    var courseRatingInstructor = courseRatingsCurrentYear.Where(x => x.instructorID == p.instructorID);
+                    var courseRatingInstructor = courseRatings.Where(x => x.instructorID == p.instructorID);
                     var responses = courseRatingInstructor.Select(y => y.responses).Sum(z => z);
                     var students = courseRatingInstructor.Select(y => y.classSize).Sum(z => z);
                     var semesters = courseRatingInstructor.Select(v =>
@@ -72,36 +77,38 @@ namespace UFEvaluations.Controllers
         public ViewResult List()
         {
             CollegeListViewModel viewModel = new CollegeListViewModel();
-            string currentYear = DateTime.Now.Year.ToString();
-            List<CourseRating> courseRatingsCurrentYear = StaticData.overallRatingsList.Where(p => p.semester.Contains(currentYear) && p.classSize >= p.responses).ToList();
 
-            var courseRatingsCurrentYearDept = courseRatingsCurrentYear.Join(StaticData.courseList, prim => prim.courseID, fore => fore.courseID,
-(prim, fore) => new { fore.departmentID, prim.classSize, prim.responses, prim.ratings });
+            List<CourseRating> courseRatings = StaticData.overallRatingsList
+                .Where(p => StaticData.termsToDisplay.Contains(p.semester) && p.classSize >= p.responses)
+                .ToList();
+
+            var courseRatingsDept = courseRatings.Join(StaticData.courseList, prim => prim.courseID, fore => fore.courseID,
+                (prim, fore) => new { fore.departmentID, prim.classSize, prim.responses, prim.ratings });
 
             var departmentList = StaticData.departmentList.Select(t => t.departmentID).Select(p =>
             {
-                var responses = courseRatingsCurrentYearDept.Where(x => x.departmentID == p).Select(y => y.responses).Sum(z => z);
+                var responses = courseRatingsDept.Where(x => x.departmentID == p).Select(y => y.responses).Sum(z => z);
                 return new
                 {
                     departmentID = p,
-                    rating = courseRatingsCurrentYearDept
+                    rating = courseRatingsDept
                     .Where(x => x.departmentID == p).Sum(z => ((double)z.responses / (double)responses) * z.ratings[0].averageRating),
                     responses = responses,
-                    classSizes = courseRatingsCurrentYearDept.Where(x => x.departmentID == p).Select(y => y.classSize).Sum(z => z),
+                    classSizes = courseRatingsDept.Where(x => x.departmentID == p).Select(y => y.classSize).Sum(z => z),
                     collegeID = StaticData.departmentList.Where(a => a.departmentID == p).FirstOrDefault().collegeID
                 };
             }).ToList();
 
-            var courseRatingsCurrentYearCol = courseRatingsCurrentYearDept.Join(StaticData.departmentList, prim => prim.departmentID, fore => fore.departmentID,
-(prim, fore) => new { fore.collegeID, prim.classSize, prim.responses, prim.ratings });
+            var courseRatingsCol = courseRatingsDept.Join(StaticData.departmentList, prim => prim.departmentID, fore => fore.departmentID,
+                (prim, fore) => new { fore.collegeID, prim.classSize, prim.responses, prim.ratings });
 
             var topcollegesList = StaticData.collegeList.Select(t => t.collegeID).Select(p =>
             {
-                var responses = courseRatingsCurrentYearCol.Where(x => x.collegeID == p).Select(y => y.responses).Sum(z => z);
+                var responses = courseRatingsCol.Where(x => x.collegeID == p).Select(y => y.responses).Sum(z => z);
                 return new
                 {
                     collegeID = p,
-                    rating = courseRatingsCurrentYearCol
+                    rating = courseRatingsCol
                     .Where(x => x.collegeID == p).Sum(z => ((double)z.responses / (double)responses) * z.ratings[0].averageRating),
                     responses = responses,
                 };

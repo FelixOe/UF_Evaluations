@@ -122,3 +122,8 @@ h3 {
     .top-list-element:nth-child(even) {
         background-color: #DDDDDD;
     }
+
+.dataTable thead {
+    background: #005596;
+    color: #fff;
+}

@@ -27,6 +27,11 @@ namespace UFEvaluations
             StaticData.departmentList = DepartmentRepositorySQL.Instance.listAll();
             StaticData.collegeList = CollegeRepositorySQL.Instance.listAll();
             StaticData.overallRatingsList = CourseRatingRepositorySQL.Instance.listAllByCategory(10);
+
+            StaticData.termsToDisplay = new List<string>();
+            StaticData.termsToDisplay.Add("2017 Summer");
+            StaticData.termsToDisplay.Add("2017 Spring");
+            StaticData.termsToDisplay.Add("2016 Fall");
         }
     }
 }

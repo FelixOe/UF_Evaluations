@@ -14,10 +14,7 @@
 <div class="top-area">
     <div class="row">
         <div class="col-md-12">
-            <div class="top-box">
-                <h3 class="text-center">All Instructors</h3>
-            </div>
-            <div>
+            <div class="table-responsive">
                 <table class="data-table">
                     <thead>
                         <tr>
@@ -46,10 +43,10 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.ActionLink(instructor.firstName + " " + instructor.lastName, "Detail", "InstructorsController", new { instructor = (instructor.firstName + instructor.lastName).Trim().ToLower() }, null)
+                                    @Html.ActionLink(instructor.firstName + " " + instructor.lastName, "Detail", "Instructors", new { instructor = GlobalFunctions.escapeQuerystringElement(instructor.firstName + instructor.lastName) }, null)
                                 </td>
                                 <td>
-                                    @instructor.department
+                                    @Html.ActionLink(instructor.department, "Detail", "Departments", new { department = GlobalFunctions.escapeQuerystringElement(instructor.department) }, null)
                                 </td>
                                 <td>
                                     @instructor.lastSemester

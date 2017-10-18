@@ -1,7 +1,7 @@
-﻿@model UFEvaluations.Models.DepartmentDetailViewModel
+﻿@model UFEvaluations.Models.CourseDetailViewModel
 
 @{
-    ViewBag.Title = Model.department.name;
+    ViewBag.Title = Model.course.code + " - " + Model.course.title;
 }
 
 @section Scripts {
@@ -9,7 +9,7 @@
     @Scripts.Render("~/Scripts/loadDatatable.js")
 }
 
-<h1>@Model.department.name</h1>
+<h1>@Model.course.code - @Model.course.title</h1>
 
 <div class="top-area">
     <div class="row">

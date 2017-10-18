@@ -1,7 +1,7 @@
-﻿@model UFEvaluations.Models.DepartmentDetailViewModel
+﻿@model UFEvaluations.Models.CourseListViewModel
 
 @{
-    ViewBag.Title = Model.department.name;
+    ViewBag.Title = "Courses";
 }
 
 @section Scripts {
@@ -9,7 +9,7 @@
     @Scripts.Render("~/Scripts/loadDatatable.js")
 }
 
-<h1>@Model.department.name</h1>
+<h1>Courses</h1>
 
 <div class="top-area">
     <div class="row">
@@ -18,45 +18,55 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Instructor</th>
-                            <th>Last semester</th>
+                            <th>Code</th>
+                            <th>Title</th>
+                            <th>Department</th>
                             <th># of responses</th>
                             <th># of students</th>
+                            <th># of instructors</th>
                             <th>Response rate</th>
                             <th>Overall rating</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>Instructor</th>
-                            <th>Last semester</th>
+                            <th>Code</th>
+                            <th>Title</th>
+                            <th>Department</th>
                             <th># of responses</th>
                             <th># of students</th>
+                            <th># of instructors</th>
                             <th>Response rate</th>
                             <th>Overall rating</th>
                         </tr>
                     </tfoot>
                     <tbody>
-                        @foreach (var instructor in Model.instructors)
+                        @foreach (var course in Model.courses)
                         {
                             <tr>
                                 <td>
-                                    @Html.ActionLink(instructor.firstName + " " + instructor.lastName, "Detail", "Instructors", new { instructor = GlobalFunctions.escapeQuerystringElement(instructor.firstName + instructor.lastName) }, null)
+                                    @Html.ActionLink(course.code, "Detail", "Courses", new { course = GlobalFunctions.escapeQuerystringElement(course.code) }, null)
                                 </td>
                                 <td>
-                                    @instructor.lastSemester
+                                    @course.title
                                 </td>
                                 <td>
-                                    @instructor.responses
+                                    @Html.ActionLink(course.departmentName, "Detail", "Departments", new { department = GlobalFunctions.escapeQuerystringElement(course.departmentName) }, null)
                                 </td>
                                 <td>
-                                    @instructor.students
+                                    @course.responses
                                 </td>
                                 <td>
-                                    @instructor.responseRate
+                                    @course.students
                                 </td>
                                 <td>
-                                    @instructor.rating
+                                    @course.instructors
+                                </td>
+                                <td>
+                                    @course.responseRate
+                                </td>
+                                <td>
+                                    @course.rating
                                 </td>
                             </tr>
                         }

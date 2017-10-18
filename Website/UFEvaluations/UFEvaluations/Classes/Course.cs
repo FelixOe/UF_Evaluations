@@ -10,6 +10,13 @@ public class Course
     public string title { get; set; }
     public string code { get; set; }
     public int departmentID { get; set; }
+    public string departmentName { get; set; }
+
+    public string rating { get; set; }
+    public string responses { get; set; }
+    public string students { get; set; }
+    public string instructors { get; set; }
+    public string responseRate { get; set; }
 
     public static Course getByID(int courseID)
     {

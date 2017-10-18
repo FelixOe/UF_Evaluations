@@ -12,4 +12,5 @@ public static class StaticData
     public static List<Department> departmentList;
     public static List<College> collegeList;
     public static List<CourseRating> overallRatingsList;
+    public static List<string> termsToDisplay;
 }

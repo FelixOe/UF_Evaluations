@@ -175,6 +175,8 @@
     </Compile>
     <Compile Include="Models\CollegeDetailViewModel.cs" />
     <Compile Include="Models\CollegeListViewModel.cs" />
+    <Compile Include="Models\CourseDetailViewModel.cs" />
+    <Compile Include="Models\CourseListViewModel.cs" />
     <Compile Include="Models\DepartmentDetailViewModel.cs" />
     <Compile Include="Models\DepartmentListViewModel.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
@@ -238,10 +240,11 @@
     <Content Include="Views\Colleges\Detail.cshtml" />
     <Content Include="Views\Departments\Detail.cshtml" />
     <Content Include="Views\Departments\List.cshtml" />
+    <Content Include="Views\Courses\Detail.cshtml" />
+    <Content Include="Views\Courses\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Courses\" />
     <Folder Include="Views\Instructors\" />
   </ItemGroup>
   <ItemGroup>

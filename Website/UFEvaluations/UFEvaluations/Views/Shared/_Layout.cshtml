@@ -14,11 +14,18 @@
         <div class="container">
             <div class="navbar-header">
                 @Html.ActionLink("UF Evaluations", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
             </div>
-            <div class="navbar-collapse collapse">
+            <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Colleges", "List", "Colleges")</li>
                     <li>@Html.ActionLink("Departments", "List", "Departments")</li>
+                    <li>@Html.ActionLink("Courses", "List", "Courses")</li>
                     <li>@Html.ActionLink("Instructors", "List", "Instructors")</li>
                 </ul>
                 <form class="navbar-form navbar-right">
