@@ -65,7 +65,7 @@ namespace UFEvaluations.Controllers
                     return new {
                         semester = u,
                         rating = graphRatingsList
-                            .Sum(z => ((double)z.responses / (double)graphResponses) * z.ratings[0].averageRating).ToString("#.##")
+                            .Sum(z => ((double)z.responses / (double)graphResponses) * z.ratings.Where(e => e.categoryID == 10).FirstOrDefault().averageRating).ToString("#.##")
                     };
                 }).OrderBy(p => p.semester);
 
