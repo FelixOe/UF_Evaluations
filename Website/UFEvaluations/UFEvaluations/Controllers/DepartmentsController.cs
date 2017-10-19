@@ -7,7 +7,7 @@ using UFEvaluations.Models;
 
 namespace UFEvaluations.Controllers
 {
-    public class DepartmentsController : Controller
+    public class DepartmentsController : BaseController
     {
         public ViewResult Detail()
         {

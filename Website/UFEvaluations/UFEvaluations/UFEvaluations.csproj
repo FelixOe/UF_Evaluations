@@ -168,11 +168,13 @@
     <Compile Include="Classes\Rating.cs" />
     <Compile Include="Classes\SemesterComparer.cs" />
     <Compile Include="Classes\StaticData.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CollegesController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\DepartmentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstructorsController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -185,6 +187,7 @@
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\InstructorDetailViewModel.cs" />
     <Compile Include="Models\InstructorListViewModel.cs" />
+    <Compile Include="Models\LayoutViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -194,6 +197,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\datatables.css" />
     <Content Include="Content\datatables.min.css" />
+    <Content Include="Content\jquery-ui.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -220,6 +224,7 @@
     <Content Include="Scripts\jquery-3.2.1.slim.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -253,6 +258,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
+    <Folder Include="Views\Search\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

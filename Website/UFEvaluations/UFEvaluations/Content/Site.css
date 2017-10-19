@@ -127,3 +127,7 @@ h3 {
     background: #005596;
     color: #fff;
 }
+
+.ui-autocomplete {
+    z-index: 2000;
+}
