@@ -45,7 +45,7 @@
                             <div class="dropdown-item">
                                 <div class="input-group text-center form-group-setting">
                                     <label for="DropdownCategory">Rating type</label><br />
-                                    <select class="input-control" name="DropdownCategory" id="DropdownCategory" onchange="updateCategory();">
+                                    <select class="form-control" name="DropdownCategory" id="DropdownCategory" onchange="updateCategory();">
                                         @foreach (var cat in ViewBag.LayoutViewModel.categories)
                                         {
                                             <option @(cat.Second ? "selected" : "") value="@cat.First.categoryID">@cat.First.name</option>
@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="input-group text-center form-group-setting">
                                     <label for="DropdownSemester">Semester</label><br />
-                                    <select class="input-control" name="DropdownSemester" id="DropdownSemester" onchange="updateSemester();">
+                                    <select class="form-control" name="DropdownSemester" id="DropdownSemester" onchange="updateSemester();">
                                         @foreach (var sem in ViewBag.LayoutViewModel.semesters)
                                         {
                                             <option @(sem.Second ? "selected" : "") value="@sem.First.key">@sem.First.semester</option>
@@ -68,7 +68,6 @@
                                         });
                                         updateCategory = function () {
                                             var newValue = $('#DropdownCategory').find(':selected').val();
-                                            debugger;
                                             $.ajax({
                                                 url: '/Settings/SetCategory',
                                                 type: 'POST',
