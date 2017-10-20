@@ -98,21 +98,23 @@ namespace UFEvaluations.Controllers
             var courseRatingsCol = courseRatingsDept.Join(StaticData.departmentList, prim => prim.departmentID, fore => fore.departmentID,
                 (prim, fore) => new { fore.collegeID, prim.classSize, prim.responses, prim.ratings });
 
-            var topcollegesList = StaticData.collegeList.Select(t => t.collegeID).Select(p =>
+            List<College> colleges = StaticData.collegeList.Select(p =>
             {
-                var responses = courseRatingsCol.Where(x => x.collegeID == p).Select(y => y.responses).Sum(z => z);
-                return new
+                var responses = courseRatingsCol.Where(x => x.collegeID == p.collegeID).Select(y => y.responses).Sum(z => z);
+                var students = courseRatingsCol.Where(x => x.collegeID == p.collegeID).Select(y => y.classSize).Sum(z => z);
+                return new College
                 {
-                    collegeID = p,
+                    collegeID = p.collegeID,
+                    name = p.name,
                     rating = courseRatingsCol
-                    .Where(x => x.collegeID == p).Sum(z => ((double)z.responses / (double)responses) * z.ratings[0].averageRating),
-                    responses = responses,
+                    .Where(x => x.collegeID == p.collegeID).Sum(z => ((double)z.responses / (double)responses) * z.ratings[0].averageRating).ToString("#.##"),
+                    responses = responses.ToString(),
+                    students = students.ToString(),
+                    responseRate = ((double)responses / (double)students).ToString("p1")
                 };
             }).OrderByDescending(s => s.rating).ToList();
 
-            viewModel.colleges = topcollegesList.Select(p => StaticData.collegeList.Where(x => x.collegeID == p.collegeID).FirstOrDefault())
-                .Select(x => new KeyValuePair<string, string>(x.name, topcollegesList.Where(y => y.collegeID == x.collegeID).FirstOrDefault().rating.ToString("#.##")))
-                .ToList();
+            viewModel.colleges = colleges;
 
             return View(viewModel);
         }

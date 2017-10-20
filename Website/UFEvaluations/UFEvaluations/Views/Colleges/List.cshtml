@@ -4,17 +4,60 @@
     ViewBag.Title = "Colleges";
 }
 
+@section Scripts {
+    @Scripts.Render("~/ Scripts / jquery -{ version}.js")
+    @Scripts.Render("~/Scripts/loadDatatable.js")
+}
+
 <h2>Colleges</h2>
 
 <div class="top-area">
     <div class="row">
         <div class="col-md-12">
-            <ul class="top-list list-group">
-                @foreach (var college in Model.colleges)
-                {
-                    <li class="top-list-element list-group-item"><span class="pull-left">@Html.ActionLink(college.Key, "Detail", "Colleges", new { college = GlobalFunctions.escapeQuerystringElement(college.Key) }, null)</span><span class="pull-right">@college.Value</span></li>
-                }
-            </ul>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>College</th>
+                            <th># of responses</th>
+                            <th># of students</th>
+                            <th>Response rate</th>
+                            <th>Overall rating</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>College</th>
+                            <th># of responses</th>
+                            <th># of students</th>
+                            <th>Response rate</th>
+                            <th>Overall rating</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var college in Model.colleges)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.ActionLink(college.name, "Detail", "Colleges", new { college = GlobalFunctions.escapeQuerystringElement(college.name) }, null)
+                                </td>
+                                <td>
+                                    @college.responses
+                                </td>
+                                <td>
+                                    @college.students
+                                </td>
+                                <td>
+                                    @college.responseRate
+                                </td>
+                                <td>
+                                    @college.rating
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
