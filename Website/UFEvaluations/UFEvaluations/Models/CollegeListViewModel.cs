@@ -7,6 +7,6 @@ namespace UFEvaluations.Models
 {
     public class CollegeListViewModel
     {
-        public List<KeyValuePair<string, string>> colleges { get; set; }
+        public List<College> colleges { get; set; }
     }
 }

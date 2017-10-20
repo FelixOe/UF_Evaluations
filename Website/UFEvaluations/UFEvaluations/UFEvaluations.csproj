@@ -155,6 +155,7 @@
     <Compile Include="Classes\Department.cs" />
     <Compile Include="Classes\DepartmentRepositorySQL.cs" />
     <Compile Include="Classes\GlobalFunctions.cs" />
+    <Compile Include="Classes\GlobalVariables.cs" />
     <Compile Include="Classes\ICategoryRepository.cs" />
     <Compile Include="Classes\ICollegeRepository.cs" />
     <Compile Include="Classes\ICourseRatingRepository.cs" />

@@ -148,13 +148,6 @@ h3 {
     margin-right: 20px;
 }
 
-.dropdown-menu {
-    margin-top: 18px;
-    min-width: 200px;
-    min-height: 150px;
-    right: -30px !important;
-}
-
 .form-group-setting{
     width: 100%;
 }
@@ -174,3 +167,23 @@ h3 {
         background-color: #057B49;
         border-color: #057B49;
     }
+
+@media (min-width: 768px){
+    .dropdown-menu {
+        margin-top: 18px;
+        min-width: 200px;
+        min-height: 150px;
+        right: -30px !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .dropdown-menu {
+        clear: both;
+        margin-top: 18px;
+        width: 100%;
+        min-height: 150px;
+        left: 0;
+        position: relative;
+    }
+}

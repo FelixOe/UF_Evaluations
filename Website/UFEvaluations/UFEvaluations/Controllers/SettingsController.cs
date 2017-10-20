@@ -8,9 +8,19 @@ namespace UFEvaluations.Controllers
 {
     public class SettingsController : Controller
     {
-        public ActionResult SetSettings(string DropdownCategory, string DropdownSemester)
+        [HttpPost]
+        public JsonResult SetCategory(string Category)
         {
-            return View();
+            GlobalVariables.CurrentCategory = Category;
+
+            return Json("{ 'message': 'success'}", JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult SetSemester(string Semester)
+        {
+            GlobalVariables.CurrentSemester = Semester;
+
+            return Json("{ 'message': 'success'}", JsonRequestBehavior.AllowGet);
         }
     }
 }

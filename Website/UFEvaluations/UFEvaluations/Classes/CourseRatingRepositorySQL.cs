@@ -69,6 +69,63 @@ public class CourseRatingRepositorySQL : ICourseRatingRepository<CourseRating>
         return courseRatings;
     }
 
+    public List<CourseRating> listByCategoryAndSemesters(int categoryID, params string[] semesters)
+    {
+        List<CourseRating> courseRatings = new List<CourseRating>();
+
+        if (semesters.Count() <= 0)
+            throw new ArgumentOutOfRangeException();
+
+        try
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+
+            string query = @"Select CourseRatings.id AS course_rating_id, CourseRatings.course_id, CourseRatings.instructor_id, CourseRatings.section, CourseRatings.semester, CourseRatings.responses,
+                            CourseRatings.class_size, CourseRatings.term, Scores.id, Scores.score, Scores.st_dev, Scores.category_id FROM CourseRatings
+                            JOIN Scores ON CourseRatings.id = Scores.course_rating_id
+                            WHERE Scores.category_id = @category_id AND (";
+
+            for (int i = 0; i < semesters.Count(); i++)
+                query += (i == 0 ? "" : " OR ") + "CourseRatings.semester = @semester" + i;
+
+            query += ");";
+
+            SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
+            adapter.SelectCommand.Parameters.AddWithValue("@category_id", categoryID);
+
+            for(int i = 0; i < semesters.Count(); i++)
+                adapter.SelectCommand.Parameters.AddWithValue("@semester" + i, semesters[i]);
+
+            DataTable courseRatingsTable = new DataTable();
+            adapter.Fill(courseRatingsTable);
+
+            courseRatings = courseRatingsTable.AsEnumerable().Select(p => new CourseRating
+            {
+                courseRatingID = Convert.ToInt32(p.ItemArray[0].ToString()),
+                courseID = Convert.ToInt32(p.ItemArray[1].ToString()),
+                instructorID = Convert.ToInt32(p.ItemArray[2].ToString()),
+                section = p.ItemArray[3].ToString(),
+                semester = p.ItemArray[4].ToString(),
+                responses = Convert.ToInt32(p.ItemArray[5].ToString()),
+                classSize = Convert.ToInt32(p.ItemArray[6].ToString()),
+                term = p.ItemArray[7].ToString(),
+                ratings = new List<Rating>() { new Rating {
+                    courseRatingID = Convert.ToInt32(p.ItemArray[0].ToString()),
+                    ratingID = Convert.ToInt32(p.ItemArray[8].ToString()),
+                    averageRating = Convert.ToDouble(p.ItemArray[9].ToString()),
+                    standardDeviation = Convert.ToDouble(p.ItemArray[10].ToString()),
+                    categoryID = Convert.ToInt32(p.ItemArray[11].ToString())
+                } }
+            }).ToList();
+        }
+        catch (Exception ex)
+        {
+
+        }
+
+        return courseRatings;
+    }
+
     public List<CourseRating> listByInstructor(int instructorID)
     {
         List<CourseRating> courseRatings = new List<CourseRating>();

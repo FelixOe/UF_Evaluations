@@ -19,8 +19,10 @@ namespace UFEvaluations.Controllers
                     .Where(p => GlobalFunctions.escapeQuerystringElement(p.code) == GlobalFunctions.escapeQuerystringElement(Request.QueryString["course"].ToString()))
                     .FirstOrDefault();
 
-                List<CourseRating> courseRatings = StaticData.overallRatingsList
-                    .Where(p => StaticData.termsToDisplay.Contains(p.semester) && p.classSize >= p.responses)
+                List<CourseRating> courseRatings = CourseRatingRepositorySQL.Instance.listByCategoryAndSemesters(
+                    Convert.ToInt32(GlobalVariables.CurrentCategory),
+                    (GlobalVariables.CurrentSemester == "-1" ? StaticData.semesters.Take(3).Select(y => y.semester).ToArray() : new[] { GlobalVariables.CurrentSemester }))
+                    .Where(p => p.classSize >= p.responses)
                     .ToList();
 
                 //Filter only sections within the department (Not all ratings of a professor who had a course within that department)
@@ -74,8 +76,10 @@ namespace UFEvaluations.Controllers
         {
             CourseListViewModel viewModel = new CourseListViewModel();
 
-            List<CourseRating> courseRatings = StaticData.overallRatingsList
-                .Where(p => StaticData.termsToDisplay.Contains(p.semester) && p.classSize >= p.responses)
+            List<CourseRating> courseRatings = CourseRatingRepositorySQL.Instance.listByCategoryAndSemesters(
+                Convert.ToInt32(GlobalVariables.CurrentCategory),
+                (GlobalVariables.CurrentSemester == "-1" ? StaticData.semesters.Take(3).Select(y => y.semester).ToArray() : new[] { GlobalVariables.CurrentSemester }))
+                .Where(p => p.classSize >= p.responses)
                 .ToList();
 
             List<int> courseIDs = courseRatings.Select(y => y.courseID).Distinct().ToList();

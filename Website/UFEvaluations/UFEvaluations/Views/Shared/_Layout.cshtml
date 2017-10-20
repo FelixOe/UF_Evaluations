@@ -35,35 +35,63 @@
                             <input type="text" class="form-control search-textbox" placeholder="Search" name="searchInput" id="searchInput">
                         </div>
                         <button type="submit" class="btn btn-default btn-blue">Search</button>
-                            <script type="text/javascript" defer="defer">
+                        <script type="text/javascript" defer="defer">
                             document.addEventListener("DOMContentLoaded", function (event) { @Html.Raw(ViewBag.LayoutViewModel.searchScript) });
-                            </script>
+                        </script>
                     }
                     <span class="nav-item dropdown">
                         <div class="navbar-link dropdown-toggle glyphicon glyphicon-cog settings pull-right" id="settingsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></div>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="settingsDropdown">
                             <div class="dropdown-item">
-                                @using (Ajax.BeginForm("SetSettings", "Settings", new AjaxOptions()))
-                                {
-                                    <div class="input-group text-center form-group-setting">
-                                        <label for="DropdownCategory">Rating type</label><br />
-                                        <select class="input-control" name="DropdownCategory" id="DropdownCategory" onchange="$(this.form).submit();">
-                                            @foreach (var cat in ViewBag.LayoutViewModel.categories)
-                                            {
-                                                <option @(cat.Second ? "selected" : "") value="@cat.First.categoryID">@cat.First.name</option>
-                                            }
-                                        </select>
-                                    </div>
-                                    <div class="input-group text-center form-group-setting">
-                                        <label for="DropdownSemester">Semester</label><br />
-                                        <select class="input-control" name="DropdownSemester" id="DropdownSemester" onchange="$(this.form).submit();">
-                                            @foreach (var sem in ViewBag.LayoutViewModel.semesters)
-                                            {
-                                                <option @(sem.Second ? "selected" : "") value="@sem.First.key">@sem.First.semester</option>
-                                            }
-                                        </select>
-                                    </div>
-                                }
+                                <div class="input-group text-center form-group-setting">
+                                    <label for="DropdownCategory">Rating type</label><br />
+                                    <select class="input-control" name="DropdownCategory" id="DropdownCategory" onchange="updateCategory();">
+                                        @foreach (var cat in ViewBag.LayoutViewModel.categories)
+                                        {
+                                            <option @(cat.Second ? "selected" : "") value="@cat.First.categoryID">@cat.First.name</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="input-group text-center form-group-setting">
+                                    <label for="DropdownSemester">Semester</label><br />
+                                    <select class="input-control" name="DropdownSemester" id="DropdownSemester" onchange="updateSemester();">
+                                        @foreach (var sem in ViewBag.LayoutViewModel.semesters)
+                                        {
+                                            <option @(sem.Second ? "selected" : "") value="@sem.First.key">@sem.First.semester</option>
+                                        }
+                                    </select>
+                                </div>
+                                <script type="text/javascript" defer="defer">
+                                    document.addEventListener("DOMContentLoaded", function (event) {
+                                        $('.dropdown-menu').on('click', function (e) {
+                                            e.stopPropagation();
+                                        });
+                                        updateCategory = function () {
+                                            var newValue = $('#DropdownCategory').find(':selected').val();
+                                            debugger;
+                                            $.ajax({
+                                                url: '/Settings/SetCategory',
+                                                type: 'POST',
+                                                dataType: 'json',
+                                                data: { Category: newValue }
+                                            }).done(function (data) {
+
+                                            });
+                                        }
+                                        updateSemester = function () {
+                                            var newValue = $('#DropdownSemester').find(':selected').val();
+                                            $.ajax({
+                                                url: '/Settings/SetSemester',
+                                                type: 'POST',
+                                                dataType: 'json',
+                                                data: { Semester: newValue },
+                                                success: function (data) {
+
+                                                }
+                                            });
+                                        }
+                                    });
+                                </script>
                                 <button class="btn btn-green pull-right" value="Refresh" onclick="window.location.reload();"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
                             </div>
                         </div>

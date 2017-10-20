@@ -21,18 +21,21 @@ namespace UFEvaluations.Controllers
                 name = p.name
             }, false)).ToList();
 
-            model.categories[3].Second = true;
+            model.categories.Where(p => p.First.categoryID.ToString() == GlobalVariables.CurrentCategory).FirstOrDefault().Second = true;
 
             model.semesters = StaticData.semesters.Select(p => new Pair<Semester, bool>(new Semester
             {
-                key = p.key,
+                key = p.semester,
                 semester = p.semester
             }, false)).ToList();
             model.semesters.Insert(0, new Pair<Semester, bool>(new Semester
             {
                 key = "-1",
                 semester = "Past 3 semesters"
-            }, true));
+            }, false));
+
+            model.semesters.Where(p => p.First.key.ToString() == GlobalVariables.CurrentSemester).FirstOrDefault().Second = true;
+
             ViewBag.LayoutViewModel = model;
         }
     }
