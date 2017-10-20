@@ -13,10 +13,11 @@ namespace UFEvaluations.Controllers
         {
             HomeViewModel viewModel = new HomeViewModel();
 
-            List<CourseRating> courseRatings = StaticData.overallRatingsList
-                .Where(p => StaticData.termsToDisplay.Contains(p.semester) && p.classSize >= p.responses)
+            List<CourseRating> courseRatings = CourseRatingRepositorySQL.Instance.listByCategoryAndSemesters(
+                Convert.ToInt32(GlobalVariables.CurrentCategory), 
+                (GlobalVariables.CurrentSemester == "-1" ? StaticData.semesters.Take(3).Select(y => y.semester).ToArray() : new []{ GlobalVariables.CurrentSemester }))
+                .Where(p => p.classSize >= p.responses)
                 .ToList();
-
 
             //Get top 10 courses by enrollment
             var topcoursesList = courseRatings.Select(t => t.courseID).Distinct().Select(p => new {

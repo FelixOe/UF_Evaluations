@@ -155,6 +155,7 @@
     <Compile Include="Classes\Department.cs" />
     <Compile Include="Classes\DepartmentRepositorySQL.cs" />
     <Compile Include="Classes\GlobalFunctions.cs" />
+    <Compile Include="Classes\GlobalVariables.cs" />
     <Compile Include="Classes\ICategoryRepository.cs" />
     <Compile Include="Classes\ICollegeRepository.cs" />
     <Compile Include="Classes\ICourseRatingRepository.cs" />
@@ -165,7 +166,9 @@
     <Compile Include="Classes\InstructorGraph.cs" />
     <Compile Include="Classes\InstructorRepositorySQL.cs" />
     <Compile Include="Classes\OverallRating.cs" />
+    <Compile Include="Classes\Pair.cs" />
     <Compile Include="Classes\Rating.cs" />
+    <Compile Include="Classes\Semester.cs" />
     <Compile Include="Classes\SemesterComparer.cs" />
     <Compile Include="Classes\StaticData.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -175,6 +178,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstructorsController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -260,6 +264,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Search\" />
+    <Folder Include="Views\Settings\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -43,6 +43,11 @@ namespace UFEvaluations
             StaticData.termsToDisplay.Add("2017 Summer");
             StaticData.termsToDisplay.Add("2017 Spring");
             StaticData.termsToDisplay.Add("2016 Fall");
+
+            var terms = StaticData.overallRatingsList.Select(p => p.term).Distinct();
+
+            StaticData.semesters = terms.Select(p => new Semester { key = p, semester = StaticData.overallRatingsList.Where(y => y.term == p).FirstOrDefault().semester }).Distinct()
+                .OrderByDescending(p => p.semester, new SemesterComparer()).ToList();
         }
     }
 }

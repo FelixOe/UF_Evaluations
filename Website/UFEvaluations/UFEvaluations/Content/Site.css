@@ -131,3 +131,59 @@ h3 {
 .ui-autocomplete {
     z-index: 2000;
 }
+
+.settings {
+    font-size: 30px;
+    color: #fff !important;
+}
+
+    .settings:hover {
+        color: #ddd !important;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+.navbar-form form {
+    display: inline;
+    margin-right: 20px;
+}
+
+.form-group-setting{
+    width: 100%;
+}
+
+.dropdown-item {
+    padding: 10px;
+}
+
+.btn-green {
+    color: #FFF;
+    background-color: #046A38;
+    border-color: #046A38;
+}
+
+    .btn-green:hover {
+        color: #FFF;
+        background-color: #057B49;
+        border-color: #057B49;
+    }
+
+@media (min-width: 768px){
+    .dropdown-menu {
+        margin-top: 18px;
+        min-width: 200px;
+        min-height: 150px;
+        right: -30px !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .dropdown-menu {
+        clear: both;
+        margin-top: 18px;
+        width: 100%;
+        min-height: 150px;
+        left: 0;
+        position: relative;
+    }
+}

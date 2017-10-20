@@ -19,8 +19,10 @@ namespace UFEvaluations.Controllers
                     .Where(p => GlobalFunctions.escapeQuerystringElement(p.name) == GlobalFunctions.escapeQuerystringElement(Request.QueryString["college"].ToString()))
                     .FirstOrDefault();
 
-                List<CourseRating> courseRatings = StaticData.overallRatingsList
-                    .Where(p => StaticData.termsToDisplay.Contains(p.semester) && p.classSize >= p.responses)
+                List<CourseRating> courseRatings = CourseRatingRepositorySQL.Instance.listByCategoryAndSemesters(
+                    Convert.ToInt32(GlobalVariables.CurrentCategory),
+                    (GlobalVariables.CurrentSemester == "-1" ? StaticData.semesters.Take(3).Select(y => y.semester).ToArray() : new[] { GlobalVariables.CurrentSemester }))
+                    .Where(p => p.classSize >= p.responses)
                     .ToList();
 
                 List<Instructor> instructors = InstructorRepositorySQL.Instance.listByCollege(college.collegeID)
@@ -70,8 +72,10 @@ namespace UFEvaluations.Controllers
         {
             CollegeListViewModel viewModel = new CollegeListViewModel();
 
-            List<CourseRating> courseRatings = StaticData.overallRatingsList
-                .Where(p => StaticData.termsToDisplay.Contains(p.semester) && p.classSize >= p.responses)
+            List<CourseRating> courseRatings = CourseRatingRepositorySQL.Instance.listByCategoryAndSemesters(
+                Convert.ToInt32(GlobalVariables.CurrentCategory),
+                (GlobalVariables.CurrentSemester == "-1" ? StaticData.semesters.Take(3).Select(y => y.semester).ToArray() : new[] { GlobalVariables.CurrentSemester }))
+                .Where(p => p.classSize >= p.responses)
                 .ToList();
 
             var courseRatingsDept = courseRatings.Join(StaticData.courseList, prim => prim.courseID, fore => fore.courseID,
