@@ -8,5 +8,7 @@ namespace UFEvaluations.Models
     public class LayoutViewModel
     {
         public string searchScript { get; set; }
+        public List<Pair<Category, bool>> categories { get; set; }
+        public List<Pair<Semester, bool>> semesters { get; set; }
     }
 }
