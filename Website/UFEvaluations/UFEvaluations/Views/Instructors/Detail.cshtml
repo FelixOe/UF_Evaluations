@@ -67,7 +67,7 @@
                             <th># of responses</th>
                             <th># of students</th>
                             <th>Response rate</th>
-                            <th>Overall rating</th>
+                            <th>Rating</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -77,7 +77,7 @@
                             <th># of responses</th>
                             <th># of students</th>
                             <th>Response rate</th>
-                            <th>Overall rating</th>
+                            <th>Rating</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -111,7 +111,57 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-
+            <h4>Sections</h4>
+            <br />
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Course</th>
+                            <th>Section</th>
+                            <th>Semester</th>
+                            <th># of responses</th>
+                            <th># of students</th>
+                            <th>Rating</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Course</th>
+                            <th>Section</th>
+                            <th>Semester</th>
+                            <th># of responses</th>
+                            <th># of students</th>
+                            <th>Rating</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (CourseRating sect in Model.courseRatingsAll)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.ActionLink(sect.courseCode, "Detail", "Courses", new { course = GlobalFunctions.escapeQuerystringElement(sect.courseCode) }, null)
+                                </td>
+                                <td>
+                                    @sect.section
+                                </td>
+                                <td>
+                                    @sect.semester
+                                </td>
+                                <td>
+                                    @sect.responses
+                                </td>
+                                <td>
+                                    @sect.classSize
+                                </td>
+                                <td>
+                                    @sect.ratings.Where(p => p.categoryID == 10).FirstOrDefault().averageRating
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

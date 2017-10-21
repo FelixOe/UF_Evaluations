@@ -74,7 +74,12 @@ namespace UFEvaluations.Controllers
 
                 viewModel.instructor = instructor;
                 viewModel.overallRatings = overallRatings;
-                viewModel.courseRatingsAll = courseRatings;
+                viewModel.courseRatingsAll = courseRatings.Select(p => 
+                {
+                    Course thisCourse = StaticData.courseList.Where(y => y.courseID == p.courseID).FirstOrDefault();
+                    p.courseCode = thisCourse.code;
+                    return p;
+                }).ToList();
                 viewModel.firstTerm = courseRatings.Select(v => v.semester).Distinct()
                     .OrderBy(t => t, new SemesterComparer()).FirstOrDefault().ToString();
                 viewModel.responsesAll = responses.ToString();
