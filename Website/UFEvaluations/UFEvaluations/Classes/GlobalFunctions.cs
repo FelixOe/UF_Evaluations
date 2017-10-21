@@ -14,35 +14,41 @@ public static class GlobalFunctions
         return filteredString;
     }
 
-    public static string createChartScript(InstructorGraph data)
+    public static string createMultipleChartScript(InstructorGraph data, List<string> labels)
     {
-        return @"var ctx = document.getElementById('instructorChart');
+        string script = "";
+
+        script += @"var ctx = document.getElementById('instructorChart');
         var instructorChart = new Chart(ctx, {
         type: 'line',
         data:
         {
             labels: " + data.labels + @",
-            datasets: [{
-                label: 'Ratings',
-                data: " + data.data + @",
+            datasets: [";
+
+        for(int i = 0; i < data.data.Count(); i++)
+        {
+            script += @"{
+                label: '" + labels[i] + @"',
+                data: " + data.data[i] + @",
                 borderWidth: 1,
-                backgroundColor: 'rgb(17, 102, 167, 0.5)',
-                borderColor: 'rgb(0, 85, 150)'
-            }]
+                backgroundColor: 'rgb(0, 0, 0, 0.0)',
+                borderColor: '" + StaticData.graphColors[i] + @"',
+                hidden: " + (i == data.data.Count() - 1 || (data.data.Count() > 1 && i == 0) ? "false" : "true") + @"
+            },";
+        }
+
+        //Delete last comma
+        script = script.Remove(script.Length - 1);
+
+        script += @"]
         },
         options:
         {
-            scales:
-            {
-                yAxes: [{
-                    ticks:
-                    {
-                        beginAtZero: true
-                    }
-                }]
-            }
         }
     });";
+
+        return script;
     }
 
     public static string createAutoCompleteScript()

@@ -8,6 +8,7 @@ public class CourseRating
     public int courseRatingID { get; set; }
     public int instructorID { get; set; }
     public int courseID { get; set; }
+    public string courseCode { get; set; }
     public string section { get; set; }
     public string semester { get; set; }
     public int responses { get; set; }

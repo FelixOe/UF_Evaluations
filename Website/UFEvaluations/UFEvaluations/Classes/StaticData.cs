@@ -15,4 +15,5 @@ public static class StaticData
     public static List<string> termsToDisplay;
     public static List<Pair<string,string>> searchTerms;
     public static List<Semester> semesters;
+    public static List<string> graphColors;
 }

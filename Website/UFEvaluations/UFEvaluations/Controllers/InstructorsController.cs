@@ -58,23 +58,45 @@ namespace UFEvaluations.Controllers
                 //Populate graph
                 InstructorGraph instructorGraph = new InstructorGraph();
 
-                var data = courseRatings.Select(p => p.semester).Distinct().Select(u => {
-                    var graphRatingsList = courseRatings.Where(x => x.semester == u);
-                    var graphResponses = graphRatingsList.Select(y => y.responses).Sum(z => z);
+                //Create a list of IEnumerables, in which each element will hold a pair, first for the semester, to sort by, second for the rating
+                List<IEnumerable<Pair<string, string>>> graphData = new List<IEnumerable<Pair<string, string>>>();
+                //List of labels to display on the graph, in this case the category names
+                List<string> labels = new List<string>();
 
-                    return new {
-                        semester = u,
-                        rating = graphRatingsList
-                            .Sum(z => ((double)z.responses / (double)graphResponses) * z.ratings.Where(e => e.categoryID == 10).FirstOrDefault().averageRating).ToString("#.##")
-                    };
-                }).OrderBy(p => p.semester, new SemesterComparer());
+                //Loop through all categories and calculate the instructor rating for each semester for said category
+                foreach (var category in StaticData.categoryList.Where(p => p.name != "NULL"))
+                {
+                    graphData.Add(courseRatings.Select(p => p.semester).Distinct().Select(u =>
+                    {
+                        var graphRatingsList = courseRatings.Where(x => x.semester == u);
+                        var graphResponses = graphRatingsList.Select(y => y.responses).Sum(z => z);
 
-                instructorGraph.labels = "['" + String.Join("', '", data.Select(p => p.semester).ToArray()) + "']";
-                instructorGraph.data = "[" + String.Join(", ", data.Select(p => p.rating).ToArray()) + "]";
+                        return new Pair<string, string>(u,
+                            graphRatingsList
+                                .Sum(z => ((double)z.responses / (double)graphResponses) * z.ratings.Where(e => e.categoryID == category.categoryID).FirstOrDefault().averageRating).ToString("#.##")
+                        );
+                    }).OrderBy(p => p.First, new SemesterComparer())
+                    );
+                    labels.Add(category.name);
+                }
+
+                //Join all semesters once for the labels to be in JSON
+                instructorGraph.labels = "['" + String.Join("', '", graphData[0].Select(p => p.First).ToArray()) + "']";
+
+                instructorGraph.data = new List<string>();
+
+                //Join the data for each linegraph to be in JSON
+                foreach (var line in graphData)
+                    instructorGraph.data.Add("[" + String.Join(", ", line.Select(p => p.Second).ToArray()) + "]");
 
                 viewModel.instructor = instructor;
                 viewModel.overallRatings = overallRatings;
-                viewModel.courseRatingsAll = courseRatings;
+                viewModel.courseRatingsAll = courseRatings.Select(p => 
+                {
+                    Course thisCourse = StaticData.courseList.Where(y => y.courseID == p.courseID).FirstOrDefault();
+                    p.courseCode = thisCourse.code;
+                    return p;
+                }).ToList();
                 viewModel.firstTerm = courseRatings.Select(v => v.semester).Distinct()
                     .OrderBy(t => t, new SemesterComparer()).FirstOrDefault().ToString();
                 viewModel.responsesAll = responses.ToString();
@@ -82,7 +104,7 @@ namespace UFEvaluations.Controllers
                 viewModel.departments = departments;
                 viewModel.responseRateOverall = ((double)responses / (double)students).ToString("p1");
                 viewModel.courses = courses;
-                ViewBag.loadChart = GlobalFunctions.createChartScript(instructorGraph);
+                ViewBag.loadChart = GlobalFunctions.createMultipleChartScript(instructorGraph, labels);
 
             }
 
