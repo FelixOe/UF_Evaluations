@@ -13,6 +13,6 @@ public static class StaticData
     public static List<College> collegeList;
     public static List<CourseRating> overallRatingsList;
     public static List<string> termsToDisplay;
-    public static List<string> searchTerms;
+    public static List<Pair<string,string>> searchTerms;
     public static List<Semester> semesters;
 }

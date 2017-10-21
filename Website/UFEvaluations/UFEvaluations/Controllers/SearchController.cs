@@ -14,7 +14,7 @@ namespace UFEvaluations.Controllers
             if (StaticData.instructorList.Select(p => GlobalFunctions.escapeQuerystringElement(p.lastName + p.firstName)).Contains(GlobalFunctions.escapeQuerystringElement(searchInput)))
             {
                 Instructor thisInstructor = StaticData.instructorList
-                .Where(p => GlobalFunctions.escapeQuerystringElement(p.lastName + " " + p.firstName).Contains(GlobalFunctions.escapeQuerystringElement(searchInput))).FirstOrDefault();
+                .Where(p => GlobalFunctions.escapeQuerystringElement(p.lastName + ", " + p.firstName).Contains(GlobalFunctions.escapeQuerystringElement(searchInput))).FirstOrDefault();
 
                 return RedirectToAction("Detail", "Instructors", new { instructor = GlobalFunctions.escapeQuerystringElement(thisInstructor.firstName + " " + thisInstructor.lastName) });
             }
@@ -46,7 +46,10 @@ namespace UFEvaluations.Controllers
         [HttpPost]
         public JsonResult AutoCompleteSearch(string term)
         {
-            var data = StaticData.searchTerms.Where(p => GlobalFunctions.escapeQuerystringElement(p).Contains(GlobalFunctions.escapeQuerystringElement(term))).Take(8);
+            var data = StaticData.searchTerms.Where(p => 
+            GlobalFunctions.escapeQuerystringElement(p.First).Contains(GlobalFunctions.escapeQuerystringElement(term)) || 
+                (p.Second != "" && GlobalFunctions.escapeQuerystringElement(p.Second).Contains(GlobalFunctions.escapeQuerystringElement(term))))
+            .Take(8).Select(p => p.First);
 
             return Json(data, JsonRequestBehavior.AllowGet);
         }

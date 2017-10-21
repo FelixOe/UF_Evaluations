@@ -32,11 +32,13 @@ namespace UFEvaluations
                 name = (p.name.ToLower().Contains("college") ? System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(p.name.ToLower()).Replace("Of", "of") : "College of " + System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(p.name.ToLower()))
             }).ToList();
             StaticData.overallRatingsList = CourseRatingRepositorySQL.Instance.listAllByCategory(10);
-            StaticData.searchTerms = new List<string>();
-            StaticData.searchTerms = StaticData.searchTerms.Union(StaticData.instructorList.Select(p => p.lastName.Trim() + " " + p.firstName.Trim())).ToList();
-            StaticData.searchTerms = StaticData.searchTerms.Union(StaticData.collegeList.Select(p => p.name)).ToList();
-            StaticData.searchTerms = StaticData.searchTerms.Union(StaticData.departmentList.Select(p => p.name)).ToList();
-            StaticData.searchTerms = StaticData.searchTerms.Union(StaticData.courseList.Select(p => p.code + " - " + p.title)).ToList();
+            StaticData.searchTerms = new List<Pair<string,string>>();
+            StaticData.searchTerms = StaticData.searchTerms.Union(StaticData.instructorList.Select(p => 
+                new Pair<string, string>(p.lastName.Trim() + ", " + p.firstName.Trim(), p.firstName.Trim() + ", " + p.lastName.Trim())
+            )).ToList();
+            StaticData.searchTerms = StaticData.searchTerms.Union(StaticData.collegeList.Select(p => new Pair<string, string>(p.name, ""))).ToList();
+            StaticData.searchTerms = StaticData.searchTerms.Union(StaticData.departmentList.Select(p => new Pair<string, string>(p.name, ""))).ToList();
+            StaticData.searchTerms = StaticData.searchTerms.Union(StaticData.courseList.Select(p => new Pair<string, string>(p.code + " - " + p.title, ""))).ToList();
             StaticData.searchTerms.OrderBy(p => p);
 
             StaticData.termsToDisplay = new List<string>();
