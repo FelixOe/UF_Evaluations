@@ -48,6 +48,16 @@ namespace UFEvaluations
 
             StaticData.semesters = terms.Select(p => new Semester { key = p, semester = StaticData.overallRatingsList.Where(y => y.term == p).FirstOrDefault().semester }).Distinct()
                 .OrderByDescending(p => p.semester, new SemesterComparer()).ToList();
+
+            StaticData.graphColors = new List<string>();
+            StaticData.graphColors.Add("rgb(222,77,38)"); //Orange
+            StaticData.graphColors.Add("rgb(4,77,38)"); //Green
+            StaticData.graphColors.Add("rgb(255,204,0)"); //Yellow
+            StaticData.graphColors.Add("rgb(204,0,0)"); //Red
+            StaticData.graphColors.Add("rgb(102,0,153)"); //Purple
+            StaticData.graphColors.Add("rgb(139,69,19)"); //Brown
+            StaticData.graphColors.Add("rgb(0,0,0)"); //Black
+            StaticData.graphColors.Add("rgb(0,85,150)"); //Blue
         }
     }
 }
