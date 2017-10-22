@@ -19,8 +19,20 @@ namespace UFEvaluations.Controllers
                     .Where(p => GlobalFunctions.escapeQuerystringElement(p.firstName + p.lastName) == GlobalFunctions.escapeQuerystringElement(Request.QueryString["instructor"].ToString()))
                     .FirstOrDefault();
 
-                List<CourseRating> courseRatings = CourseRatingRepositorySQL.Instance.listByInstructor(instructor.instructorID);
+                //Get semesters to display
+                List<Semester> semesters = StaticData.semesters.Where(p =>
+                    new SemesterComparer().Compare(p.semester, GlobalVariables.CurrentSemesterLow) >= 0
+                    && new SemesterComparer().Compare(p.semester, GlobalVariables.CurrentSemesterHigh) <= 0).ToList();
 
+                List<CourseRating> courseRatingsOverall = CourseRatingRepositorySQL.Instance.listByInstructor(instructor.instructorID);
+
+                //Get all course ratings for the instructor, and adjust to the semester range
+                List<CourseRating> courseRatings = courseRatingsOverall
+                    .Where(p => semesters.Select(y => y.semester).Contains(p.semester)).ToList();
+
+                //Calculate number of responses and number of students
+                var responsesOverall = courseRatingsOverall.Select(y => y.responses).Sum(z => z);
+                var studentsOverall = courseRatingsOverall.Select(y => y.classSize).Sum(z => z);
                 var responses = courseRatings.Select(y => y.responses).Sum(z => z);
                 var students = courseRatings.Select(y => y.classSize).Sum(z => z);
                 List<string> departments = new List<string>();
@@ -48,7 +60,7 @@ namespace UFEvaluations.Controllers
                         departmentID = p.departmentID,
                         departmentName = deptName,
                         rating = courseRatingsList
-                            .Sum(z => ((double)z.responses / (double)courseResponses) * z.ratings[0].averageRating).ToString("#.##"),
+                            .Sum(z => ((double)z.responses / (double)courseResponses) * z.ratings.Where(a => a.categoryID == Convert.ToInt32(GlobalVariables.CurrentCategory)).FirstOrDefault().averageRating).ToString("#.##"),
                         responses = courseResponses.ToString(),
                         students = courseStudents.ToString(),
                         responseRate = ((double)courseResponses / (double)courseStudents).ToString("p1")
@@ -97,15 +109,19 @@ namespace UFEvaluations.Controllers
                     p.courseCode = thisCourse.code;
                     return p;
                 }).ToList();
-                viewModel.firstTerm = courseRatings.Select(v => v.semester).Distinct()
+                viewModel.firstTerm = courseRatingsOverall.Select(v => v.semester).Distinct()
                     .OrderBy(t => t, new SemesterComparer()).FirstOrDefault().ToString();
-                viewModel.responsesAll = responses.ToString();
-                viewModel.studentsAll = students.ToString();
+                viewModel.responsesAll = responsesOverall.ToString();
+                viewModel.studentsAll = studentsOverall.ToString();
                 viewModel.departments = departments;
-                viewModel.responseRateOverall = ((double)responses / (double)students).ToString("p1");
+                viewModel.responseRateOverall = ((double)responsesOverall / (double)studentsOverall).ToString("p1");
                 viewModel.courses = courses;
+                viewModel.currentCategory = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.
+                ToTitleCase(
+                    StaticData.categoryList.Where(p => p.categoryID == Convert.ToInt32(GlobalVariables.CurrentCategory))
+                    .FirstOrDefault().name
+                    );
                 ViewBag.loadChart = GlobalFunctions.createMultipleChartScript(instructorGraph, labels);
-
             }
 
             return View(viewModel);

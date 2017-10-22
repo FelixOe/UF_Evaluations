@@ -16,5 +16,6 @@ namespace UFEvaluations.Models
         public string studentsAll { get; set; }
         public string responseRateOverall { get; set; }
         public List<string> departments { get; set; }
+        public string currentCategory { get; set; }
     }
 }

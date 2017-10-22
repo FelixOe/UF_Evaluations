@@ -15,4 +15,14 @@ public static class GlobalVariables
         get { return (HttpContext.Current.Session["CurrentSemester"] != null ? HttpContext.Current.Session["CurrentSemester"].ToString() : "-1"); }
         set { HttpContext.Current.Session["CurrentSemester"] = value; }
     }
+    public static string CurrentSemesterLow
+    {
+        get { return (HttpContext.Current.Session["CurrentSemesterLow"] != null ? HttpContext.Current.Session["CurrentSemesterLow"].ToString() : StaticData.semesters.LastOrDefault().semester); }
+        set { HttpContext.Current.Session["CurrentSemesterLow"] = value; }
+    }
+    public static string CurrentSemesterHigh
+    {
+        get { return (HttpContext.Current.Session["CurrentSemesterHigh"] != null ? HttpContext.Current.Session["CurrentSemesterHigh"].ToString() : StaticData.semesters.FirstOrDefault().semester); }
+        set { HttpContext.Current.Session["CurrentSemesterHigh"] = value; }
+    }
 }

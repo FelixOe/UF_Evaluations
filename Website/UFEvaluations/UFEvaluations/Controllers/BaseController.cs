@@ -23,6 +23,7 @@ namespace UFEvaluations.Controllers
 
             model.categories.Where(p => p.First.categoryID.ToString() == GlobalVariables.CurrentCategory).FirstOrDefault().Second = true;
 
+            //Get semesters for entire site
             model.semesters = StaticData.semesters.Select(p => new Pair<Semester, bool>(new Semester
             {
                 key = p.semester,
@@ -35,6 +36,24 @@ namespace UFEvaluations.Controllers
             }, false));
 
             model.semesters.Where(p => p.First.key.ToString() == GlobalVariables.CurrentSemester).FirstOrDefault().Second = true;
+
+            //Get low semesters for instructor detail
+            model.semestersLow = StaticData.semesters.Select(p => new Pair<Semester, bool>(new Semester
+            {
+                key = p.semester,
+                semester = p.semester
+            }, false)).ToList();
+
+            model.semestersLow.Where(p => p.First.key.ToString() == GlobalVariables.CurrentSemesterLow).FirstOrDefault().Second = true;
+
+            //Get high semesters for instructor detail
+            model.semestersHigh = StaticData.semesters.Select(p => new Pair<Semester, bool>(new Semester
+            {
+                key = p.semester,
+                semester = p.semester
+            }, false)).ToList();
+
+            model.semestersHigh.Where(p => p.First.key.ToString() == GlobalVariables.CurrentSemesterHigh).FirstOrDefault().Second = true;
 
             ViewBag.LayoutViewModel = model;
         }
