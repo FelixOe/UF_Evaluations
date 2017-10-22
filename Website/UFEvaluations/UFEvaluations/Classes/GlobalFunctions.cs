@@ -45,6 +45,13 @@ public static class GlobalFunctions
         },
         options:
         {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        suggestedMin: 1
+                    }
+                }]
+            }
         }
     });";
 
