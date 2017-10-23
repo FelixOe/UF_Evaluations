@@ -22,5 +22,19 @@ namespace UFEvaluations.Controllers
 
             return Json("{ 'message': 'success'}", JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        public JsonResult SetSemesterLow(string Semester)
+        {
+            GlobalVariables.CurrentSemesterLow = Semester;
+
+            return Json("{ 'message': 'success'}", JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult SetSemesterHigh(string Semester)
+        {
+            GlobalVariables.CurrentSemesterHigh = Semester;
+
+            return Json("{ 'message': 'success'}", JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -51,45 +51,120 @@
                                             <option @(cat.Second ? "selected" : "") value="@cat.First.categoryID">@cat.First.name</option>
                                         }
                                     </select>
-                                </div>
-                                <div class="input-group text-center form-group-setting">
-                                    <label for="DropdownSemester">Semester</label><br />
-                                    <select class="form-control" name="DropdownSemester" id="DropdownSemester" onchange="updateSemester();">
-                                        @foreach (var sem in ViewBag.LayoutViewModel.semesters)
-                                        {
-                                            <option @(sem.Second ? "selected" : "") value="@sem.First.key">@sem.First.semester</option>
-                                        }
-                                    </select>
-                                </div>
-                                <script type="text/javascript" defer="defer">
-                                    document.addEventListener("DOMContentLoaded", function (event) {
-                                        $('.dropdown-menu').on('click', function (e) {
-                                            e.stopPropagation();
+                                    <script type="text/javascript" defer="defer">
+                                        document.addEventListener("DOMContentLoaded", function (event) {
+                                            updateCategory = function () {
+                                                var newValue = $('#DropdownCategory').find(':selected').val();
+                                                $.ajax({
+                                                    url: '/Settings/SetCategory',
+                                                    type: 'POST',
+                                                    dataType: 'json',
+                                                    data: { Category: newValue }
+                                                }).done(function (data) {
+
+                                                });
+                                            }
                                         });
-                                        updateCategory = function () {
-                                            var newValue = $('#DropdownCategory').find(':selected').val();
-                                            $.ajax({
-                                                url: '/Settings/SetCategory',
-                                                type: 'POST',
-                                                dataType: 'json',
-                                                data: { Category: newValue }
-                                            }).done(function (data) {
+                                    </script>
+                                </div>
+                                @if (ViewContext.RouteData.Values["Controller"].ToString() == "Instructors" && ViewContext.RouteData.Values["Action"].ToString() == "Detail")
+                                {
+                                    <div class="input-group text-center form-group-setting">
+                                        <label for="DropdownSemester">Semester range</label><br />
+                                        <div>From</div>
+                                        <select class="form-control" name="DropdownSemesterLow" id="DropdownSemesterLow" onchange="updateSemesterLow();">
+                                            @foreach (var sem in ViewBag.LayoutViewModel.semestersLow)
+                                            {
+                                                <option @(sem.Second ? "selected" : "") value="@sem.First.key">@sem.First.semester</option>
+                                            }
+                                        </select>
+                                        <script type="text/javascript" defer="defer">
+                                            document.addEventListener("DOMContentLoaded", function (event) {
+                                                updateSemester = function () {
+                                                    var newValue = $('#DropdownSemester').find(':selected').val();
+                                                    $.ajax({
+                                                        url: '/Settings/SetSemester',
+                                                        type: 'POST',
+                                                        dataType: 'json',
+                                                        data: { Semester: newValue },
+                                                        success: function (data) {
 
-                                            });
-                                        }
-                                        updateSemester = function () {
-                                            var newValue = $('#DropdownSemester').find(':selected').val();
-                                            $.ajax({
-                                                url: '/Settings/SetSemester',
-                                                type: 'POST',
-                                                dataType: 'json',
-                                                data: { Semester: newValue },
-                                                success: function (data) {
-
+                                                        }
+                                                    });
                                                 }
                                             });
-                                        }
-                                    });
+                                        </script>
+                                        <div>to</div>
+                                        <select class="form-control" name="DropdownSemesterHigh" id="DropdownSemesterHigh" onchange="updateSemesterHigh();">
+                                            @foreach (var sem in ViewBag.LayoutViewModel.semestersHigh)
+                                            {
+                                                <option @(sem.Second ? "selected" : "") value="@sem.First.key">@sem.First.semester</option>
+                                            }
+                                        </select>
+                                        <script type="text/javascript" defer="defer">
+                                            document.addEventListener("DOMContentLoaded", function (event) {
+                                                updateSemesterLow = function () {
+                                                    var newValue = $('#DropdownSemesterLow').find(':selected').val();
+                                                    $.ajax({
+                                                        url: '/Settings/SetSemesterLow',
+                                                        type: 'POST',
+                                                        dataType: 'json',
+                                                        data: { Semester: newValue },
+                                                        success: function (data) {
+
+                                                        }
+                                                    });
+                                                }
+                                                updateSemesterHigh = function () {
+                                                    var newValue = $('#DropdownSemesterHigh').find(':selected').val();
+                                                    $.ajax({
+                                                        url: '/Settings/SetSemesterHigh',
+                                                        type: 'POST',
+                                                        dataType: 'json',
+                                                        data: { Semester: newValue },
+                                                        success: function (data) {
+
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        </script>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="input-group text-center form-group-setting">
+                                        <label for="DropdownSemester">Semester</label><br />
+                                        <select class="form-control" name="DropdownSemester" id="DropdownSemester" onchange="updateSemester();">
+                                            @foreach (var sem in ViewBag.LayoutViewModel.semesters)
+                                            {
+                                                <option @(sem.Second ? "selected" : "") value="@sem.First.key">@sem.First.semester</option>
+                                            }
+                                        </select>
+                                        <script type="text/javascript" defer="defer">
+                                            document.addEventListener("DOMContentLoaded", function (event) {
+                                                updateSemester = function () {
+                                                    var newValue = $('#DropdownSemester').find(':selected').val();
+                                                    $.ajax({
+                                                        url: '/Settings/SetSemester',
+                                                        type: 'POST',
+                                                        dataType: 'json',
+                                                        data: { Semester: newValue },
+                                                        success: function (data) {
+
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        </script>
+                                    </div>
+                                }
+                                <script type="text/javascript" defer="defer">
+                                            document.addEventListener("DOMContentLoaded", function (event) {
+                                                $('.dropdown-menu').on('click', function (e) {
+                                                    e.stopPropagation();
+                                                });
+                                            });
                                 </script>
                                 <button class="btn btn-green pull-right" value="Refresh" onclick="window.location.reload();"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
                             </div>

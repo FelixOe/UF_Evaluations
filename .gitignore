@@ -4,6 +4,7 @@
 #Visual Studio
 bin
 obj
+.vs
 
 # User-specific files
 *.suo
