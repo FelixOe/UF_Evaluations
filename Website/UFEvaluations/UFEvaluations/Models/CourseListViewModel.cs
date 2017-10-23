@@ -8,5 +8,10 @@ namespace UFEvaluations.Models
     public class CourseListViewModel
     {
         public List<Course> courses { get; set; }
+        public string totalResponses { get; set; }
+        public string totalStudents { get; set; }
+        public string totalInstructors { get; set; }
+        public string averageResponseRate { get; set; }
+        public string averageRating { get; set; }
     }
 }

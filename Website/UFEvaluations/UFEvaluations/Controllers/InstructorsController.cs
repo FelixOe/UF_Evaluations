@@ -44,6 +44,10 @@ namespace UFEvaluations.Controllers
                     };
                 }).ToList();
 
+                int totalResponses = 0;
+                int totalStudents = 0;
+                double averageRating = 0.0;
+
                 List<Course> courses = StaticData.courseList.Where(p => courseRatings.Select(a => a.courseID).Distinct().Contains(p.courseID)).Select(p => {
                     var courseRatingsList = courseRatings.Where(x => x.courseID == p.courseID);
                     var courseResponses = courseRatingsList.Select(y => y.responses).Sum(z => z);
@@ -52,6 +56,11 @@ namespace UFEvaluations.Controllers
                     var deptName = StaticData.departmentList.Where(u => u.departmentID == p.departmentID).FirstOrDefault().name;
                     if(!departments.Contains(deptName))
                         departments.Add(deptName);
+
+                    totalResponses += courseResponses;
+                    totalStudents += courseStudents;
+                    averageRating += courseRatingsList
+                            .Sum(z => ((double)z.responses * z.ratings.Where(a => a.categoryID == Convert.ToInt32(GlobalVariables.CurrentCategory)).FirstOrDefault().averageRating));
 
                     return new Course
                     {
@@ -119,6 +128,10 @@ namespace UFEvaluations.Controllers
                 viewModel.currentCategory = StaticData.categoryList.Where(p => p.categoryID == Convert.ToInt32(GlobalVariables.CurrentCategory))
                     .FirstOrDefault().name;
                 ViewBag.loadChart = GlobalFunctions.createMultipleChartScript(instructorGraph, labels);
+                viewModel.totalResponses = totalResponses.ToString("N0");
+                viewModel.totalStudents = totalStudents.ToString("N0");
+                viewModel.averageResponseRate = ((double)totalResponses / (double)totalStudents).ToString("p1");
+                viewModel.averageRating = (averageRating / (double)totalResponses).ToString("#.##");
             }
 
             return View(viewModel);
@@ -137,6 +150,9 @@ namespace UFEvaluations.Controllers
             List<int> instructorIDs = courseRatings.Select(y => y.instructorID).Distinct().ToList();
 
             var instructorList = StaticData.instructorList.Where(p => instructorIDs.Contains(p.instructorID));
+            int totalResponses = 0;
+            int totalStudents = 0;
+            double averageRating = 0.0;
 
             List<Instructor> instructors = instructorList.Select(p =>
             {
@@ -145,6 +161,12 @@ namespace UFEvaluations.Controllers
                 var students = courseRatingsList.Select(y => y.classSize).Sum(z => z);
                 var semesters = courseRatingsList.Select(v => v.semester).Distinct()
                     .OrderByDescending(t => t, new SemesterComparer());
+
+                totalResponses += responses;
+                totalStudents += students;
+                averageRating += courseRatingsList
+                        .Sum(z => z.responses* z.ratings[0].averageRating);
+
                 return new Instructor
                 {
                     instructorID = p.instructorID,
@@ -160,6 +182,10 @@ namespace UFEvaluations.Controllers
             }).Where(t => Convert.ToInt32(t.students) > 0).ToList();
 
             viewModel.instructors = instructors;
+            viewModel.totalResponses = totalResponses.ToString("N0");
+            viewModel.totalStudents = totalStudents.ToString("N0");
+            viewModel.averageResponseRate = ((double)totalResponses / (double)totalStudents).ToString("p1");
+            viewModel.averageRating = (averageRating /(double)totalResponses).ToString("#.##");
 
             return View(viewModel);
         }
