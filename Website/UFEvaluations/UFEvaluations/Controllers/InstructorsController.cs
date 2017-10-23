@@ -116,11 +116,8 @@ namespace UFEvaluations.Controllers
                 viewModel.departments = departments;
                 viewModel.responseRateOverall = ((double)responsesOverall / (double)studentsOverall).ToString("p1");
                 viewModel.courses = courses;
-                viewModel.currentCategory = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.
-                ToTitleCase(
-                    StaticData.categoryList.Where(p => p.categoryID == Convert.ToInt32(GlobalVariables.CurrentCategory))
-                    .FirstOrDefault().name
-                    );
+                viewModel.currentCategory = StaticData.categoryList.Where(p => p.categoryID == Convert.ToInt32(GlobalVariables.CurrentCategory))
+                    .FirstOrDefault().name;
                 ViewBag.loadChart = GlobalFunctions.createMultipleChartScript(instructorGraph, labels);
             }
 

@@ -5,109 +5,62 @@
 }
 
 <div class="row">
-    <div class="col-md-8">
-        <div class="searchbox">
-            <h2>Search</h2>
-            <form name="mainSearchForm" class="form-horizontal form-padding">
-                <div class="row">
-                    <div class="col-md-3">
-                        <label for="instructorName" class="form-label">Instructor</label>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="form-group">
-                            <input class="form-control pull-right" type="text" value="" id="instructorName">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <label for="course" class="form-label">Course</label>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="form-group">
-                            <input class="form-control pull-right" type="text" value="" id="course">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <label for="departmentName" class="form-label">Department</label>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="form-group">
-                            <input class="form-control pull-right" type="text" value="" id="departmentName">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <label for="collegeName" class="form-label">College</label>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="form-group">
-                            <input class="form-control pull-right" type="text" value="" id="collegeName">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                    </div>
-                    <div class="col-md-5">
-                        <div class="form-group">
-                            <input class="form-control btn btn-default btn-blue pull-right" type="submit" value="Search" id="collegeName">
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
+    <div class="col-md-6">
+
     </div>
-    <div class="col-md-4">
-        <div class="top-box">
-            <h3 class="text-center">Top 10 Courses by Enrollment</h3>
-            <ul class="top-list list-group">
-                @foreach (var course in Model.topCourses)
-                {
-                    <li class="top-list-element list-group-item"><span class="pull-left">@course.Key</span><span class="pull-right">@course.Value</span></li>
-                }
-            </ul>
-        </div>
+    <div class="col-md-6">
+
     </div>
 </div>
-
-<div class="top-area">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="top-box">
-                <h3 class="text-center">Top 10 Instructors</h3>
-                <ul class="top-list list-group">
-                    @foreach (var instructor in Model.topInstructors)
-                    {
-                        <li class="top-list-element list-group-item"><span class="pull-left">@instructor.Key</span><span class="pull-right">@instructor.Value</span></li>
-                    }
-                </ul>
-            </div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="top-box">
+            <h3 class="text-center">Top 15 Courses by Enrollment</h3>
         </div>
-        <div class="col-md-4">
-            <div class="top-box">
-                <h3 class="text-center">Top 30 Departments</h3>
-                <ul class="top-list list-group">
-                    @foreach (var department in Model.topDepartments)
-                    {
-                        <li class="top-list-element list-group-item"><span class="pull-left">@department.Key</span><span class="pull-right">@department.Value</span></li>
-                    }
-                </ul>
-            </div>
+        <ul class="top-list list-group">
+            @foreach (var course in Model.topCourses)
+            {
+                <li class="top-list-element list-group-item"><span class="pull-left">@course.Key</span><span class="pull-right">@course.Value</span></li>
+            }
+        </ul>
+        <a href="@Url.Action("List","Courses")" class="btn btn-landing btn-default">View all Courses</a>
+    </div>
+    <div class="col-md-6">
+        <div class="top-box">
+            <h3 class="text-center">Top 15 Instructors</h3>
         </div>
-        <div class="col-md-4">
-            <div class="top-box">
-                <h3 class="text-center">All Colleges</h3>
-                <ul class="top-list list-group">
-                    @foreach (var college in Model.topColleges)
-                    {
-                        <li class="top-list-element list-group-item"><span class="pull-left">@college.Key</span><span class="pull-right">@college.Value</span></li>
-                    }
-                </ul>
-            </div>
+        <ul class="top-list list-group">
+            @foreach (var instructor in Model.topInstructors)
+            {
+                <li class="top-list-element list-group-item"><span class="pull-left">@instructor.Key</span><span class="pull-right">@instructor.Value</span></li>
+            }
+        </ul>
+        <a href="@Url.Action("List","Instructors")" class="btn btn-landing btn-default">View all Instructors</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="top-box">
+            <h3 class="text-center">Top 15 Departments</h3>
         </div>
+        <ul class="top-list list-group">
+            @foreach (var department in Model.topDepartments)
+            {
+                <li class="top-list-element list-group-item"><span class="pull-left">@department.Key</span><span class="pull-right">@department.Value</span></li>
+            }
+        </ul>
+        <a href="@Url.Action("List","Departments")" class="btn btn-landing btn-default">View all Departments</a>
+    </div>
+    <div class="col-md-6">
+        <div class="top-box">
+            <h3 class="text-center">Top 15 Colleges</h3>
+        </div>
+        <ul class="top-list list-group">
+            @foreach (var college in Model.topColleges)
+            {
+                <li class="top-list-element list-group-item"><div class="row"><div class="col-sm-8">@college.Key</div><div class="col-sm-4"><span class="pull-right">@college.Value</span></div></div></li>
+            }
+        </ul>
+        <a href="@Url.Action("List","Colleges")" class="btn btn-landing btn-default">View all Colleges</a>
     </div>
 </div>

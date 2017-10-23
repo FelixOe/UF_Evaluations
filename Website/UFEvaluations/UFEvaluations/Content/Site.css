@@ -1,22 +1,37 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Didact Gothic', sans-serif;
 }
 
 h1 {
     margin: 0px;
     font-family: 'Arvo', serif;
+    font-size: 1.8em;
 }
 
 h2 {
     margin: 0px;
     font-family: 'Arvo', serif;
+    font-size: 1.6em;
 }
 
 h3 {
     margin: 0px;
     font-family: 'Arvo', serif;
+    font-size: 1.4em;
+}
+
+h4 {
+    margin: 0px;
+    font-family: 'Arvo', serif;
+    font-size: 1.2em;
+}
+
+h5 {
+    margin: 0px;
+    font-family: 'Arvo', serif;
+    font-size: 1.1em;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -52,8 +67,36 @@ h3 {
         border-color: #1166A7;
     }
 
-.search-textbox {
-    width: 280px !important;
+.btn-orange {
+    color: #FFF;
+    background-color: #DE4D26;
+    border-color: #DE4D26;
+}
+
+    .btn-orange:hover {
+        color: #FFF;
+        background-color: #EE6E48;
+        border-color: #EE6E48;
+    }
+
+.btn-default {
+    border: 2px solid #005596;
+}
+
+    .btn-default:hover {
+        border: 2px solid #005596;
+    }
+
+@media(min-width: 1200px) {
+    .search-textbox {
+        min-width: 280px !important;
+    }
+}
+
+@media(max-width: 991px) and (min-width: 768px) {
+    .search-textbox {
+        min-width: 580px !important;
+    }
 }
 
 .navbar-inverse .navbar-brand {
@@ -70,7 +113,8 @@ h3 {
 .main-content {
     background-color: #eee;
     padding: 30px;
-    border-radius: 6px;
+    border-radius bottom left: 6px;
+    border-radius bottom right: 6px;
 }
 
 .form-padding {
@@ -90,28 +134,22 @@ h3 {
 }
 
 .top-box {
-    border-radius: 5px;
     background-color: #005596;
-    padding-top: 10px;
+    padding-top: 15px;
+    padding-bottom: 10px;
 }
 
     .top-box h3 {
-        padding-bottom: 10px;
         color: #FFF;
         margin-left: 10px;
         margin-right: 10px;
         margin-bottom: 10px;
     }
 
-.list-group-item {
-    min-height: 30px;
-}
-
 .top-list {
 }
 
 .top-list-element {
-    border: 1px #BBBBBB solid;
     padding: 2px;
 }
 
@@ -121,6 +159,30 @@ h3 {
 
     .top-list-element:nth-child(even) {
         background-color: #DDDDDD;
+    }
+
+.list-group-item {
+    min-height: 30px;
+    border-radius: 0px;
+    border: 0px;
+}
+
+.list-group-item {
+    min-height: 30px;
+    border-radius: 0px;
+    border: 0px;
+}
+
+    .list-group-item:first-child {
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+    }
+
+    .list-group-item:last-child {
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 0px;
+        margin-bottom: 0px;
+        border-bottom: 1px solid #000;
     }
 
 .dataTable thead {
@@ -148,7 +210,7 @@ h3 {
     margin-right: 20px;
 }
 
-.form-group-setting{
+.form-group-setting {
     width: 100%;
 }
 
@@ -169,7 +231,7 @@ h3 {
         border-color: #057B49;
     }
 
-@media (min-width: 768px){
+@media (min-width: 768px) {
     .dropdown-menu {
         margin-top: 18px;
         min-width: 300px;
@@ -190,5 +252,9 @@ h3 {
 }
 
 .select-default {
+}
 
+.btn-landing {
+    width: 100%;
+    margin-bottom: 30px;
 }
