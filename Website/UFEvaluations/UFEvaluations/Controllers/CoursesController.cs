@@ -19,9 +19,13 @@ namespace UFEvaluations.Controllers
                     .Where(p => GlobalFunctions.escapeQuerystringElement(p.code) == GlobalFunctions.escapeQuerystringElement(Request.QueryString["course"].ToString()))
                     .FirstOrDefault();
 
+                //Get semesters to display
+                List<Semester> semesterRange = StaticData.semesters.Where(p =>
+                    new SemesterComparer().Compare(p.semester, GlobalVariables.CurrentSemesterLow) >= 0
+                    && new SemesterComparer().Compare(p.semester, GlobalVariables.CurrentSemesterHigh) <= 0).ToList();
+
                 List<CourseRating> courseRatings = CourseRatingRepositorySQL.Instance.listByCategoryAndSemesters(
-                    Convert.ToInt32(GlobalVariables.CurrentCategory),
-                    (GlobalVariables.CurrentSemester == "-1" ? StaticData.semesters.Take(3).Select(y => y.semester).ToArray() : new[] { GlobalVariables.CurrentSemester }))
+                    Convert.ToInt32(GlobalVariables.CurrentCategory), semesterRange.Select(p => p.semester).ToArray())
                     .Where(p => p.classSize >= p.responses)
                     .ToList();
 
