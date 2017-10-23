@@ -4,6 +4,12 @@
     font-family: 'Didact Gothic', sans-serif;
 }
 
+@media(max-width: 991px) and (min-width: 768px) {
+    body {
+        padding-top: 90px !important;
+    }
+}
+
 h1 {
     margin: 0px;
     font-family: 'Arvo', serif;
@@ -257,4 +263,8 @@ h5 {
 .btn-landing {
     width: 100%;
     margin-bottom: 30px;
+}
+
+.second-row {
+    margin-top: 20px;
 }

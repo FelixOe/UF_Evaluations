@@ -1,5 +1,9 @@
 ﻿$(document).ready(function () {
-    $('.data-table').DataTable({
-        responsive: true
-    });
+    if ($(window).width() < 800) {
+        $('.data-table').DataTable({
+            responsive: true
+        });
+    }
+    else
+        $('.data-table').DataTable();
 });
