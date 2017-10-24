@@ -44,7 +44,7 @@
                 <ul class="top-list list-group">
                     @foreach (var rating in Model.overallRatings)
                     {
-                        <li class="top-list-element list-group-item"><span class="pull-left">@rating.category</span><span class="pull-right">@rating.rating</span></li>
+                        <li class="top-list-element list-group-item"><div class="row"><div class="col-sm-8">@rating.category</div><div class="col-sm-4"><span class="pull-right">@rating.rating</span></div></div></li>
                     }
                 </ul>
             </div>

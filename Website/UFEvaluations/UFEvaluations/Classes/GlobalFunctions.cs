@@ -19,6 +19,14 @@ public static class GlobalFunctions
         string script = "";
 
         script += @"var ctx = document.getElementById('instructorChart');
+        if($(window).width() < 400)
+            ctx.height = 700;
+        else if($(window).width() < 450)
+            ctx.height = 650;
+        else if($(window).width() < 600)
+            ctx.height = 450;
+        else if($(window).width() < 767)
+            ctx.height = 350;
         var instructorChart = new Chart(ctx, {
         type: 'line',
         data:
@@ -32,7 +40,6 @@ public static class GlobalFunctions
                 label: '" + labels[i] + @"',
                 data: " + data.data[i] + @",
                 borderWidth: 1,
-                backgroundColor: 'rgb(0, 0, 0, 0.0)',
                 borderColor: '" + StaticData.graphColors[i] + @"',
                 hidden: " + (i == data.data.Count() - 1 || (data.data.Count() > 1 && i == 0) ? "false" : "true") + @"
             },";
@@ -44,16 +51,17 @@ public static class GlobalFunctions
         script += @"]
         },
         options:
-        {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        suggestedMin: 1
-                    }
-                }]
+            {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            suggestedMin: 1
+                        }
+                    }]
+                },
+                responsive: true
             }
-        }
-    });";
+        });";
 
         return script;
     }
