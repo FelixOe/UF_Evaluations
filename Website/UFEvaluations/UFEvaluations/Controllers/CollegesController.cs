@@ -78,6 +78,8 @@ namespace UFEvaluations.Controllers
                 viewModel.averageRating = (averageRating / (double)totalResponses).ToString("#.##");
                 viewModel.currentSemester = (GlobalVariables.CurrentSemester == "-1" ? "the past three semesters" : GlobalVariables.CurrentSemester.Split(' ')[1] + " " + GlobalVariables.CurrentSemester.Split(' ')[0]);
             }
+            else
+                throw new HttpException(404, "College not found!");
 
             return View(viewModel);
         }

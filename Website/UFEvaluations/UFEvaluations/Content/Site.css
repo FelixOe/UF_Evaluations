@@ -269,3 +269,16 @@ h5 {
 .second-row {
     margin-top: 20px;
 }
+
+.error {
+    font-family: 'Arvo', serif;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    font-size: 4.5em;
+    font-weight: bold;
+}
+.error-small {
+    font-size: 2em;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}

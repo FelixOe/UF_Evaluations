@@ -175,6 +175,7 @@
     <Compile Include="Controllers\CollegesController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\DepartmentsController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstructorsController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
@@ -259,6 +260,8 @@
     <Content Include="Views\Courses\List.cshtml" />
     <Content Include="Views\Instructors\List.cshtml" />
     <Content Include="Views\Instructors\Detail.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

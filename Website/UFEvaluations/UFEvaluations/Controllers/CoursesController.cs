@@ -86,6 +86,8 @@ namespace UFEvaluations.Controllers
                 viewModel.currentSemesterLow = GlobalVariables.CurrentSemesterLow.Split(' ')[1] + " " + GlobalVariables.CurrentSemesterLow.Split(' ')[0];
                 viewModel.currentSemesterHigh = GlobalVariables.CurrentSemesterHigh.Split(' ')[1] + " " + GlobalVariables.CurrentSemesterHigh.Split(' ')[0];
             }
+            else
+                throw new HttpException(404, "Course not found!");
 
             return View(viewModel);
         }

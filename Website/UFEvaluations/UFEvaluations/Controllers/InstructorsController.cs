@@ -37,8 +37,10 @@ namespace UFEvaluations.Controllers
                 var students = courseRatings.Select(y => y.classSize).Sum(z => z);
                 List<string> departments = new List<string>();
 
-                List<OverallRating> overallRatings = StaticData.categoryList.Where(p => p.name != "NULL").Select(p => {
-                    return new OverallRating {
+                List<OverallRating> overallRatings = StaticData.categoryList.Where(p => p.name != "NULL").Select(p =>
+                {
+                    return new OverallRating
+                    {
                         category = p.name,
                         rating = courseRatings.Sum(z => ((double)z.responses / (double)responses) * z.ratings.Where(a => a.categoryID == p.categoryID).FirstOrDefault().averageRating).ToString("#.##")
                     };
@@ -48,13 +50,14 @@ namespace UFEvaluations.Controllers
                 int totalStudents = 0;
                 double averageRating = 0.0;
 
-                List<Course> courses = StaticData.courseList.Where(p => courseRatings.Select(a => a.courseID).Distinct().Contains(p.courseID)).Select(p => {
+                List<Course> courses = StaticData.courseList.Where(p => courseRatings.Select(a => a.courseID).Distinct().Contains(p.courseID)).Select(p =>
+                {
                     var courseRatingsList = courseRatings.Where(x => x.courseID == p.courseID);
                     var courseResponses = courseRatingsList.Select(y => y.responses).Sum(z => z);
                     var courseStudents = courseRatingsList.Select(y => y.classSize).Sum(z => z);
                     var instructors = courseRatingsList.Select(y => y.instructorID).Distinct().Count();
                     var deptName = StaticData.departmentList.Where(u => u.departmentID == p.departmentID).FirstOrDefault().name;
-                    if(!departments.Contains(deptName))
+                    if (!departments.Contains(deptName))
                         departments.Add(deptName);
 
                     totalResponses += courseResponses;
@@ -112,7 +115,7 @@ namespace UFEvaluations.Controllers
 
                 viewModel.instructor = instructor;
                 viewModel.overallRatings = overallRatings;
-                viewModel.courseRatingsAll = courseRatings.Select(p => 
+                viewModel.courseRatingsAll = courseRatings.Select(p =>
                 {
                     Course thisCourse = StaticData.courseList.Where(y => y.courseID == p.courseID).FirstOrDefault();
                     p.courseCode = thisCourse.code;
@@ -135,6 +138,8 @@ namespace UFEvaluations.Controllers
                 viewModel.currentSemesterLow = GlobalVariables.CurrentSemesterLow;
                 viewModel.currentSemesterLow = GlobalVariables.CurrentSemesterHigh;
             }
+            else
+                throw new HttpException(404, "Instructor not found!");
 
             return View(viewModel);
         }
