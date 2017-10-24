@@ -5,12 +5,16 @@
 }
 
 @section Scripts {
-    @Scripts.Render("~/ Scripts / jquery -{ version}.js")
     @Scripts.Render("~/Scripts/loadDatatable.js")
 }
 
 <h1>@Model.department.name</h1>
-
+<p>
+    This page displays a list of instructors who taught within the @Model.department.name department. It includes 
+    the total number of responses received, the total number of students within each class, the average response rate, and
+    the average rating by category for each college for <strong>@Model.currentSemester</strong>. The type of rating
+    and the semester can be adjusted by clicking on the <span class="glyphicon glyphicon-cog"></span> symbol.
+</p>
 <div class="top-area">
     <div class="row">
         <div class="col-md-12">
@@ -19,7 +23,6 @@
                     <thead>
                         <tr>
                             <th>Instructor</th>
-                            <th>Last semester</th>
                             <th># of responses</th>
                             <th># of students</th>
                             <th>Response rate</th>
@@ -29,7 +32,6 @@
                     <tfoot>
                         <tr>
                             <th>Total/Average</th>
-                            <th></th>
                             <th>@Model.totalResponses</th>
                             <th>@Model.totalStudents</th>
                             <th>@Model.averageResponseRate</th>
@@ -42,9 +44,6 @@
                             <tr>
                                 <td>
                                     @Html.ActionLink(instructor.firstName + " " + instructor.lastName, "Detail", "Instructors", new { instructor = GlobalFunctions.escapeQuerystringElement(instructor.firstName + instructor.lastName) }, null)
-                                </td>
-                                <td>
-                                    @instructor.lastSemester
                                 </td>
                                 <td>
                                     @instructor.responses

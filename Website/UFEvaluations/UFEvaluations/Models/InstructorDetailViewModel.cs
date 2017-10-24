@@ -21,5 +21,7 @@ namespace UFEvaluations.Models
         public string totalStudents { get; set; }
         public string averageResponseRate { get; set; }
         public string averageRating { get; set; }
+        public string currentSemesterLow { get; set; }
+        public string currentSemesterHigh { get; set; }
     }
 }

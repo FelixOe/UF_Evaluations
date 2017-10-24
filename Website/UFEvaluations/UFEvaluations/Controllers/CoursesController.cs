@@ -83,6 +83,8 @@ namespace UFEvaluations.Controllers
                 viewModel.totalStudents = totalStudents.ToString("N0");
                 viewModel.averageResponseRate = ((double)totalResponses / (double)totalStudents).ToString("p1");
                 viewModel.averageRating = (averageRating / (double)totalResponses).ToString("#.##");
+                viewModel.currentSemesterLow = GlobalVariables.CurrentSemesterLow.Split(' ')[1] + " " + GlobalVariables.CurrentSemesterLow.Split(' ')[0];
+                viewModel.currentSemesterHigh = GlobalVariables.CurrentSemesterHigh.Split(' ')[1] + " " + GlobalVariables.CurrentSemesterHigh.Split(' ')[0];
             }
 
             return View(viewModel);
@@ -140,6 +142,7 @@ namespace UFEvaluations.Controllers
             viewModel.totalInstructors = totalInstructors.ToString("N0");
             viewModel.averageResponseRate = ((double)totalResponses / (double)totalStudents).ToString("p1");
             viewModel.averageRating = (averageRating / (double)totalResponses).ToString("#.##");
+            viewModel.currentSemester = (GlobalVariables.CurrentSemester == "-1" ? "the past three semesters" : GlobalVariables.CurrentSemester.Split(' ')[1] + " " + GlobalVariables.CurrentSemester.Split(' ')[0]);
 
             return View(viewModel);
         }
