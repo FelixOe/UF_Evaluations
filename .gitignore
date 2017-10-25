@@ -5,6 +5,8 @@
 bin
 obj
 .vs
+*.config
+Website/UFEvaluations/UFEvaluations/Web.config
 
 # User-specific files
 *.suo
