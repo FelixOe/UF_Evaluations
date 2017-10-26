@@ -201,21 +201,38 @@ h5 {
     z-index: 2000;
 }
 
-.settings {
-    font-size: 30px;
-    color: #fff !important;
-}
-
-    .settings:hover {
-        color: #ddd !important;
-        display: inline-block;
-        cursor: pointer;
+@media (min-width: 992px) {
+    .settings {
+        font-size: 30px;
+        color: #fff !important;
+        top: 10px;
     }
-
-.navbar-form form {
-    display: inline;
-    margin-right: 20px;
 }
+
+@media (max-width: 991px) {
+    .settings {
+        font-size: 30px;
+        color: #fff !important;
+        top: 0px;
+        float: right;
+    }
+}
+
+
+.settings:hover {
+    color: #ddd !important;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.navbar-form {
+    margin-top: 0px !important;
+}
+
+    .navbar-form form {
+        display: inline;
+        margin-right: 20px;
+    }
 
 .form-group-setting {
     width: 100%;
@@ -238,16 +255,15 @@ h5 {
         border-color: #057B49;
     }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
     .dropdown-menu {
         margin-top: 18px;
         min-width: 300px;
         min-height: 150px;
-        right: -30px !important;
     }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 991px) {
     .dropdown-menu {
         clear: both;
         margin-top: 18px;
@@ -277,6 +293,7 @@ h5 {
     font-size: 4.5em;
     font-weight: bold;
 }
+
 .error-small {
     font-size: 2em;
     margin-top: 50px;

@@ -8,7 +8,8 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="https://fonts.googleapis.com/css?family=Arvo:700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Didact+Gothic" rel="stylesheet"> </head>
+    <link href="https://fonts.googleapis.com/css?family=Didact+Gothic" rel="stylesheet">
+</head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -40,8 +41,17 @@
                         </script>
                     }
                     <span class="nav-item dropdown">
-                        <div class="navbar-link dropdown-toggle glyphicon glyphicon-cog settings pull-right" id="settingsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></div>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="settingsDropdown">
+                        <div class="navbar-link dropdown-toggle glyphicon glyphicon-cog settings" id="settingsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></div>
+                        <script type="text/javascript" defer="defer">
+                            document.addEventListener("DOMContentLoaded", function (event) {
+                                if ($(document).width() < 767) {
+                                    $('#settingsDropdown').on('click', function (evt) {
+                                        $(window).scrollTop($('#refreshBtn').offset().top);
+                                    });
+                                }
+                            });
+                        </script>
+                        <div class="dropdown-menu" aria-labelledby="settingsDropdown">
                             <div class="dropdown-item">
                                 <div class="input-group text-center form-group-setting">
                                     <label for="DropdownCategory">Rating type</label><br />
@@ -68,7 +78,7 @@
                                     </script>
                                 </div>
                                 @if ((ViewContext.RouteData.Values["Controller"].ToString() == "Instructors" && ViewContext.RouteData.Values["Action"].ToString() == "Detail") ||
-                                    ViewContext.RouteData.Values["Controller"].ToString() == "Courses" && ViewContext.RouteData.Values["Action"].ToString() == "Detail")
+                ViewContext.RouteData.Values["Controller"].ToString() == "Courses" && ViewContext.RouteData.Values["Action"].ToString() == "Detail")
                                 {
                                     <div class="input-group text-center form-group-setting">
                                         <label for="DropdownSemester">Semester range</label><br />
@@ -167,7 +177,7 @@
                                                 });
                                             });
                                 </script>
-                                <button class="btn btn-green pull-right" value="Refresh" onclick="window.location.reload();"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
+                                <button class="btn btn-green pull-right" id="refreshBtn" value="Refresh" onclick="window.location.reload();"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
                             </div>
                         </div>
                     </span>
