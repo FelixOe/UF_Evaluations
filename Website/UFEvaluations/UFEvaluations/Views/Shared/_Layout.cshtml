@@ -42,15 +42,6 @@
                     }
                     <span class="nav-item dropdown">
                         <div class="navbar-link dropdown-toggle glyphicon glyphicon-cog settings" id="settingsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></div>
-                        <script type="text/javascript" defer="defer">
-                            document.addEventListener("DOMContentLoaded", function (event) {
-                                if ($(document).width() < 767) {
-                                    $('#settingsDropdown').on('click', function (evt) {
-                                        $(window).scrollTop($('#refreshBtn').offset().top);
-                                    });
-                                }
-                            });
-                        </script>
                         <div class="dropdown-menu" aria-labelledby="settingsDropdown">
                             <div class="dropdown-item">
                                 <div class="input-group text-center form-group-setting">
