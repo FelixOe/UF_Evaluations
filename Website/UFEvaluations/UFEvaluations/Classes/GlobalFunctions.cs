@@ -70,12 +70,14 @@ public static class GlobalFunctions
     {
         return @"$('#searchInput').autocomplete({  
                    source: function(request, response) {  
+                       $('#searchBtn').prop('disabled', true);
                        $.ajax({
                         url: '/Search/AutoCompleteSearch',  
                            type: 'POST',  
                            dataType: 'json',  
                            data: { term: request.term },  
                            success: function(data) {
+                            $('#searchBtn').prop('disabled', false);
                             response($.map(data, function(item) {
                                 return { label: item, value: item };
                             }))  
