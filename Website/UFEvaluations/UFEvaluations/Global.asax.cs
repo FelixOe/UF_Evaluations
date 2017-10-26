@@ -39,7 +39,7 @@ namespace UFEvaluations
             StaticData.searchTerms = StaticData.searchTerms.Union(StaticData.collegeList.Select(p => new Pair<string, string>(p.name, ""))).ToList();
             StaticData.searchTerms = StaticData.searchTerms.Union(StaticData.departmentList.Select(p => new Pair<string, string>(p.name, ""))).ToList();
             StaticData.searchTerms = StaticData.searchTerms.Union(StaticData.courseList.Select(p => new Pair<string, string>(p.code + " - " + p.title, ""))).ToList();
-            StaticData.searchTerms.OrderBy(p => p);
+            StaticData.searchTerms.OrderBy(p => p.First.Trim());
 
             StaticData.termsToDisplay = new List<string>();
             StaticData.termsToDisplay.Add("2017 Summer");

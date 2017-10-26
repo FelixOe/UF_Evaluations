@@ -48,7 +48,7 @@ namespace UFEvaluations.Controllers
         {
             var data = StaticData.searchTerms.Where(p => 
             GlobalFunctions.escapeQuerystringElement(p.First).Contains(GlobalFunctions.escapeQuerystringElement(term)) || 
-                (p.Second != "" && GlobalFunctions.escapeQuerystringElement(p.Second).Contains(GlobalFunctions.escapeQuerystringElement(term)))).OrderBy(p => p.First.Trim())
+                (p.Second != "" && GlobalFunctions.escapeQuerystringElement(p.Second).Contains(GlobalFunctions.escapeQuerystringElement(term))))
             .Take(10).Select(p => p.First);
 
             return Json(data, JsonRequestBehavior.AllowGet);
