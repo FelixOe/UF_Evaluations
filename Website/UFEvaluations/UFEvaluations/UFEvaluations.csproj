@@ -201,6 +201,11 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\DataTables-1.10.16\images\sort_asc.png" />
+    <Content Include="Content\DataTables-1.10.16\images\sort_asc_disabled.png" />
+    <Content Include="Content\DataTables-1.10.16\images\sort_both.png" />
+    <Content Include="Content\DataTables-1.10.16\images\sort_desc.png" />
+    <Content Include="Content\DataTables-1.10.16\images\sort_desc_disabled.png" />
     <Content Include="Content\datatables.css" />
     <Content Include="Content\datatables.min.css" />
     <Content Include="Content\jquery-ui.css" />

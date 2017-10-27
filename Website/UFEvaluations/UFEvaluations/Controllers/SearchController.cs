@@ -12,6 +12,9 @@ namespace UFEvaluations.Controllers
         [HttpPost]
         public ActionResult Search(string searchInput)
         {
+            if (searchInput.Length < 2)
+                throw new FormatException("Argument less than two characters!");
+
             if (StaticData.instructorList.Select(p => GlobalFunctions.escapeQuerystringElement(p.lastName + p.firstName)).Contains(GlobalFunctions.escapeQuerystringElement(searchInput)))
             {
                 Instructor thisInstructor = StaticData.instructorList
