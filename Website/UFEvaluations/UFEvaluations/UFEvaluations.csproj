@@ -193,6 +193,7 @@
     <Compile Include="Models\InstructorDetailViewModel.cs" />
     <Compile Include="Models\InstructorListViewModel.cs" />
     <Compile Include="Models\LayoutViewModel.cs" />
+    <Compile Include="Models\SearchSearchViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -264,11 +265,11 @@
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Shared\GoogleAnalytics.cshtml" />
+    <Content Include="Views\Search\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Search\" />
     <Folder Include="Views\Settings\" />
   </ItemGroup>
   <ItemGroup>

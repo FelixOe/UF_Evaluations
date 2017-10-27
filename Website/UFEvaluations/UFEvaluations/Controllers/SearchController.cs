@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using UFEvaluations.Models;
 
 namespace UFEvaluations.Controllers
 {
@@ -40,14 +41,58 @@ namespace UFEvaluations.Controllers
                 return RedirectToAction("Detail", "Courses", new { course = GlobalFunctions.escapeQuerystringElement(thisCourse.code) });
             }
 
-            return View();
+            SearchSearchViewModel viewModel = new SearchSearchViewModel();
+
+            List<string> instructorList = StaticData.instructorList.Select(p => GlobalFunctions.escapeQuerystringElement(p.lastName + p.firstName)).ToList();
+            List<string> collegeList = StaticData.collegeList.Select(p => GlobalFunctions.escapeQuerystringElement(p.name)).ToList();
+            List<string> departmentList = StaticData.departmentList.Select(p => GlobalFunctions.escapeQuerystringElement(p.name)).ToList();
+            List<string> courseList = StaticData.courseList.Select(p => GlobalFunctions.escapeQuerystringElement(p.code + " - " + p.title)).ToList();
+
+            List<Pair<string, string>> searchResults = StaticData.searchTerms.Where(p =>
+                   GlobalFunctions.escapeQuerystringElement(p.First).Contains(GlobalFunctions.escapeQuerystringElement(searchInput)) ||
+                   (p.Second != "" && GlobalFunctions.escapeQuerystringElement(p.Second).Contains(GlobalFunctions.escapeQuerystringElement(searchInput))))
+                .Select(y =>
+                {
+                    string type = "";
+                    string first = "";
+
+                    if (instructorList.Contains(GlobalFunctions.escapeQuerystringElement(y.First)))
+                    {
+                        first = y.Second;
+                        type = "Instructor";
+                    }
+                    else if (collegeList.Contains(GlobalFunctions.escapeQuerystringElement(y.First)))
+                    {
+                        first = y.First;
+                        type = "College";
+                    }
+                    else if (departmentList.Contains(GlobalFunctions.escapeQuerystringElement(y.First)))
+                    {
+                        first = y.First;
+                        type = "Department";
+                    }
+                    else if (courseList.Contains(GlobalFunctions.escapeQuerystringElement(y.First)))
+                    {
+                        first = y.First;
+                        type = "Course";
+                    }
+
+                    return new Pair<string, string>(first, type);
+                }).ToList();
+
+
+
+            viewModel.searchTerm = searchInput;
+            viewModel.searchResults = searchResults;
+
+            return View(viewModel);
         }
 
         [HttpPost]
         public JsonResult AutoCompleteSearch(string term)
         {
-            var data = StaticData.searchTerms.Where(p => 
-            GlobalFunctions.escapeQuerystringElement(p.First).Contains(GlobalFunctions.escapeQuerystringElement(term)) || 
+            var data = StaticData.searchTerms.Where(p =>
+            GlobalFunctions.escapeQuerystringElement(p.First).Contains(GlobalFunctions.escapeQuerystringElement(term)) ||
                 (p.Second != "" && GlobalFunctions.escapeQuerystringElement(p.Second).Contains(GlobalFunctions.escapeQuerystringElement(term))))
             .Take(10).Select(p => p.First);
 
