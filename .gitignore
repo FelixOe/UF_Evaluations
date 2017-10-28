@@ -4,7 +4,7 @@
 #Visual Studio
 bin
 obj
-.vs
+/.vs
 *.config
 Website/UFEvaluations/UFEvaluations/Web.config
 

@@ -13,7 +13,7 @@ namespace UFEvaluations.Controllers
         public ActionResult Search(string searchInput)
         {
             if (searchInput.Length < 2)
-                throw new FormatException("Argument less than two characters!");
+                throw new FormatException("Argument is less than two characters long!");
 
             if (StaticData.instructorList.Select(p => GlobalFunctions.escapeQuerystringElement(p.lastName + p.firstName)).Contains(GlobalFunctions.escapeQuerystringElement(searchInput)))
             {
@@ -61,7 +61,7 @@ namespace UFEvaluations.Controllers
 
                     if (instructorList.Contains(GlobalFunctions.escapeQuerystringElement(y.First)))
                     {
-                        first = y.Second;
+                        first = y.Second.Replace(",", "");
                         type = "Instructor";
                     }
                     else if (collegeList.Contains(GlobalFunctions.escapeQuerystringElement(y.First)))
