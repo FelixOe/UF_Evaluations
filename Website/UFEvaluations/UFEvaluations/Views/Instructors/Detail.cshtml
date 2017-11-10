@@ -6,7 +6,8 @@
 
 @section Scripts {
     @Scripts.Render("~/Scripts/Chart.js")
-    @Scripts.Render("~/Scripts/loadDatatable.js")
+    @Scripts.Render("~/Scripts/datatables-semester-sort.js")
+    @Scripts.Render("~/Scripts/loadDatatable-semester-sort-3.js")
 }
 
 <script type="text/javascript" defer="defer">
@@ -59,7 +60,7 @@
             <h4>Courses by @Model.currentCategory</h4>
             <br />
             <div class="table-responsive">
-                <table class="data-table">
+                <table class="data-table" id="instructorCourses">
                     <thead>
                         <tr>
                             <th>Code</th>
@@ -114,7 +115,7 @@
             <h4>Sections by @Model.currentCategory</h4>
             <br />
             <div class="table-responsive">
-                <table class="data-table">
+                <table class="data-table" id="instructorSections">
                     <thead>
                         <tr>
                             <th>Course</th>
