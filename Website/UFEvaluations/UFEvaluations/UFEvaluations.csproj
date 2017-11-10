@@ -145,11 +145,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Classes\CollegeDomain.cs" />
     <Compile Include="Classes\CourseDomain.cs" />
-    <Compile Include="Classes\CourseRating.cs" />
-    <Compile Include="Classes\Department.cs" />
+    <Compile Include="Classes\CourseRatingDomain.cs" />
+    <Compile Include="Classes\DepartmentDomain.cs" />
     <Compile Include="Classes\GlobalFunctions.cs" />
     <Compile Include="Classes\GlobalVariables.cs" />
-    <Compile Include="Classes\Instructor.cs" />
+    <Compile Include="Classes\InstructorDomain.cs" />
     <Compile Include="Classes\InstructorGraph.cs" />
     <Compile Include="Classes\OverallRating.cs" />
     <Compile Include="Classes\Pair.cs" />
