@@ -50,7 +50,7 @@ namespace UFEvaluations.Controllers
                 int totalStudents = 0;
                 double averageRating = 0.0;
 
-                List<Course> courses = StaticData.courseList.Where(p => courseRatings.Select(a => a.courseID).Distinct().Contains(p.courseID)).Select(p =>
+                List<CourseDomain> courses = StaticData.courseList.Where(p => courseRatings.Select(a => a.courseID).Distinct().Contains(p.courseID)).Select(p =>
                 {
                     var courseRatingsList = courseRatings.Where(x => x.courseID == p.courseID);
                     var courseResponses = courseRatingsList.Select(y => y.responses).Sum(z => z);
@@ -65,7 +65,7 @@ namespace UFEvaluations.Controllers
                     averageRating += courseRatingsList
                             .Sum(z => ((double)z.responses * z.ratings.Where(a => a.categoryID == Convert.ToInt32(GlobalVariables.CurrentCategory)).FirstOrDefault().averageRating));
 
-                    return new Course
+                    return new CourseDomain
                     {
                         code = p.code,
                         title = p.title,
@@ -118,8 +118,18 @@ namespace UFEvaluations.Controllers
                 viewModel.courseRatingsAll = courseRatings.Select(p =>
                 {
                     Course thisCourse = StaticData.courseList.Where(y => y.courseID == p.courseID).FirstOrDefault();
-                    p.courseCode = thisCourse.code;
-                    return p;
+                    return new CourseRatingDomain {
+                        classSize = p.classSize,
+                        courseID = p.courseID,
+                        courseRatingID = p.courseRatingID,
+                        instructorID = p.instructorID,
+                        ratings = p.ratings,
+                        responses = p.responses,
+                        section = p.section,
+                        semester = p.semester,
+                        term = p.term,
+                        courseCode = thisCourse.code
+                    };
                 }).ToList();
                 viewModel.firstTerm = courseRatingsOverall.Select(v => v.semester).Distinct()
                     .OrderBy(t => t, new SemesterComparer()).FirstOrDefault().ToString();
@@ -161,7 +171,7 @@ namespace UFEvaluations.Controllers
             int totalStudents = 0;
             double averageRating = 0.0;
 
-            List<Instructor> instructors = instructorList.Select(p =>
+            List<InstructorDomain> instructors = instructorList.Select(p =>
             {
                 var courseRatingsList = courseRatings.Where(x => x.instructorID == p.instructorID);
                 var responses = courseRatingsList.Select(y => y.responses).Sum(z => z);
@@ -174,7 +184,7 @@ namespace UFEvaluations.Controllers
                 averageRating += courseRatingsList
                         .Sum(z => z.responses* z.ratings[0].averageRating);
 
-                return new Instructor
+                return new InstructorDomain
                 {
                     instructorID = p.instructorID,
                     firstName = p.firstName,

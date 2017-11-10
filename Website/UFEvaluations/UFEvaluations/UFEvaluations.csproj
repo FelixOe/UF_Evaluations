@@ -143,31 +143,16 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Classes\Category.cs" />
-    <Compile Include="Classes\CategoryRepositorySQL.cs" />
-    <Compile Include="Classes\CategoryRepositoryXML.cs" />
-    <Compile Include="Classes\College.cs" />
-    <Compile Include="Classes\CollegeRepositorySQL.cs" />
-    <Compile Include="Classes\Course.cs" />
+    <Compile Include="Classes\CollegeDomain.cs" />
+    <Compile Include="Classes\CourseDomain.cs" />
     <Compile Include="Classes\CourseRating.cs" />
-    <Compile Include="Classes\CourseRatingRepositorySQL.cs" />
-    <Compile Include="Classes\CourseRepositorySQL.cs" />
     <Compile Include="Classes\Department.cs" />
-    <Compile Include="Classes\DepartmentRepositorySQL.cs" />
     <Compile Include="Classes\GlobalFunctions.cs" />
     <Compile Include="Classes\GlobalVariables.cs" />
-    <Compile Include="Classes\ICategoryRepository.cs" />
-    <Compile Include="Classes\ICollegeRepository.cs" />
-    <Compile Include="Classes\ICourseRatingRepository.cs" />
-    <Compile Include="Classes\ICourseRepository.cs" />
-    <Compile Include="Classes\IDepartmentRepository.cs" />
-    <Compile Include="Classes\IInstructorRepository.cs" />
     <Compile Include="Classes\Instructor.cs" />
     <Compile Include="Classes\InstructorGraph.cs" />
-    <Compile Include="Classes\InstructorRepositorySQL.cs" />
     <Compile Include="Classes\OverallRating.cs" />
     <Compile Include="Classes\Pair.cs" />
-    <Compile Include="Classes\Rating.cs" />
     <Compile Include="Classes\Semester.cs" />
     <Compile Include="Classes\SemesterComparer.cs" />
     <Compile Include="Classes\StaticData.cs" />
@@ -288,6 +273,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.2.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UFEvaluations.Data\UFEvaluationsData.csproj">
+      <Project>{c33a4bd6-e260-4565-a254-1d8de5b65fcd}</Project>
+      <Name>UFEvaluationsData</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

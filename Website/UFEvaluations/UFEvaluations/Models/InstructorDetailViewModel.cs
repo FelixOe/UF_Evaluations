@@ -9,8 +9,8 @@ namespace UFEvaluations.Models
     {
         public Instructor instructor { get; set; }
         public List<OverallRating> overallRatings { get; set; }
-        public List<CourseRating> courseRatingsAll { get; set; }
-        public List<Course> courses { get; set; }
+        public List<CourseRatingDomain> courseRatingsAll { get; set; }
+        public List<CourseDomain> courses { get; set; }
         public string firstTerm { get; set; }
         public string responsesAll { get; set; }
         public string studentsAll { get; set; }

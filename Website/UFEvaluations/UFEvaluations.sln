@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UFEvaluations", "UFEvaluati
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UFEvaluations.Tests", "UFEvaluations.Tests\UFEvaluations.Tests.csproj", "{59F14752-EEE3-4962-AD58-5193327C858E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UFEvaluationsData", "UFEvaluations.Data\UFEvaluationsData.csproj", "{C33A4BD6-E260-4565-A254-1D8DE5B65FCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{59F14752-EEE3-4962-AD58-5193327C858E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59F14752-EEE3-4962-AD58-5193327C858E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59F14752-EEE3-4962-AD58-5193327C858E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C33A4BD6-E260-4565-A254-1D8DE5B65FCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C33A4BD6-E260-4565-A254-1D8DE5B65FCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C33A4BD6-E260-4565-A254-1D8DE5B65FCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C33A4BD6-E260-4565-A254-1D8DE5B65FCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

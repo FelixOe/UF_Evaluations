@@ -32,11 +32,11 @@ namespace UFEvaluations.Controllers
                 //Filter only sections within the department (Not all ratings of a professor who had a course within that department)
                 courseRatings = courseRatings.Where(p => p.courseID == course.courseID).ToList();
 
-                List<Instructor> instructors = InstructorRepositorySQL.Instance.listByCourse(course.courseID)
+                List<Instructor> instructorsAll = InstructorRepositorySQL.Instance.listByCourse(course.courseID)
                     .Where(p => courseRatings.Select(u => u.instructorID).Distinct().Contains(p.instructorID))
                     .ToList();
 
-                var instructorDeptMapping = instructors.Select(p =>
+                var instructorDeptMapping = instructorsAll.Select(p =>
                 {
                     CourseRating firstRating = courseRatings.Where(u => u.instructorID == p.instructorID).FirstOrDefault();
                     var dept = StaticData.courseList.Where(t => t.courseID == firstRating.courseID).FirstOrDefault().departmentID;
@@ -51,7 +51,7 @@ namespace UFEvaluations.Controllers
                 int totalStudents = 0;
                 double averageRating = 0.0;
 
-                instructors = instructors.Select(p =>
+                List<InstructorDomain> instructors = instructorsAll.Select(p =>
                 {
                     var courseRatingInstructor = courseRatings.Where(x => x.instructorID == p.instructorID);
                     var responses = courseRatingInstructor.Select(y => y.responses).Sum(z => z);
@@ -63,7 +63,7 @@ namespace UFEvaluations.Controllers
                     totalStudents += students;
                     averageRating += courseRatingInstructor.Sum(z => (double)z.responses * z.ratings[0].averageRating);
 
-                    return new Instructor
+                    return new InstructorDomain
                     {
                         instructorID = p.instructorID,
                         firstName = p.firstName,
@@ -110,7 +110,7 @@ namespace UFEvaluations.Controllers
             int totalInstructors = 0;
             double averageRating = 0.0;
 
-            List<Course> courses = courseList.Select(p =>
+            List<CourseDomain> courses = courseList.Select(p =>
             {
                 var courseRatingsList = courseRatings.Where(x => x.courseID == p.courseID);
                 var responses = courseRatingsList.Select(y => y.responses).Sum(z => z);
@@ -123,7 +123,7 @@ namespace UFEvaluations.Controllers
                 averageRating += courseRatingsList
                         .Sum(z => z.responses * z.ratings[0].averageRating);
 
-                return new Course
+                return new CourseDomain
                 {
                     code = p.code,
                     title = p.title,

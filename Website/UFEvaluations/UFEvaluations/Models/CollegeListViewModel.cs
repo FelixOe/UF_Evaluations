@@ -7,7 +7,7 @@ namespace UFEvaluations.Models
 {
     public class CollegeListViewModel
     {
-        public List<College> colleges { get; set; }
+        public List<CollegeDomain> colleges { get; set; }
         public string totalResponses { get; set; }
         public string totalStudents { get; set; }
         public string averageResponseRate { get; set; }

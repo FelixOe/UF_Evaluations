@@ -8,7 +8,7 @@ namespace UFEvaluations.Models
     public class CourseDetailViewModel
     {
         public Course course { get; set; }
-        public List<Instructor> instructors { get; set; }
+        public List<InstructorDomain> instructors { get; set; }
         public string totalResponses { get; set; }
         public string totalStudents { get; set; }
         public string averageResponseRate { get; set; }

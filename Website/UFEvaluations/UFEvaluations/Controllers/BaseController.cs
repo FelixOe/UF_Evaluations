@@ -16,7 +16,7 @@ namespace UFEvaluations.Controllers
             model = new LayoutViewModel();
 
             model.searchScript = GlobalFunctions.createAutoCompleteScript();
-            model.categories = StaticData.categoryList.Where(p => p.name != "NULL").ToList().Select(p => new Pair<Category, bool>(new Category {
+           model.categories = StaticData.categoryList.Where(p => p.name != "NULL").ToList().Select(p => new Pair<Category, bool>(new Category {
                 categoryID = p.categoryID,
                 name = p.name
             }, false)).ToList();
