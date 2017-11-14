@@ -34,19 +34,22 @@ public static class GlobalFunctions
             labels: " + data.labels + @",
             datasets: [";
 
-        for(int i = 0; i < data.data.Count(); i++)
+        int i = 0;
+        foreach(var element in data.data)
         {
             script += @"{
                 label: '" + labels[i] + @"',
-                data: " + data.data[i] + @",
+                data: " + element + @",
                 borderWidth: 1,
                 borderColor: '" + StaticData.graphColors[i] + @"',
                 hidden: " + (i == data.data.Count() - 1 || (data.data.Count() > 1 && i == 0) ? "false" : "true") + @"
             },";
+            i++;
         }
 
         //Delete last comma
-        script = script.Remove(script.Length - 1);
+        if(script[script.Length - 1] == ',')
+            script = script.Remove(script.Length - 1);
 
         script += @"]
         },

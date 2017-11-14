@@ -5,56 +5,59 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-public class CollegeRepositorySQL : ICollegeRepository<College>
+namespace UFEvaluations.Data
 {
-    private static CollegeRepositorySQL instance;
-    private static readonly string connectionString = ConfigurationManager.ConnectionStrings["ConnectionStringSQL"].ConnectionString;
-
-    private CollegeRepositorySQL() { }
-
-    public static CollegeRepositorySQL Instance
+    public class CollegeRepositorySQL : ICollegeRepository<College>
     {
-        get
+        private static CollegeRepositorySQL instance;
+        private static readonly string connectionString = ConfigurationManager.ConnectionStrings["ConnectionStringSQL"].ConnectionString;
+
+        private CollegeRepositorySQL() { }
+
+        public static CollegeRepositorySQL Instance
         {
-            if (instance == null)
-                instance = new CollegeRepositorySQL();
-
-            return instance;
-        }
-    }
-
-    public List<College> listAll()
-    {
-        List<College> colleges = new List<College>();
-
-        try
-        {
-            SqlConnection conn = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand();
-
-            cmd.CommandText = "Select id, name FROM Colleges;";
-            cmd.Connection = conn;
-
-            conn.Open();
-
-            SqlDataReader rdr = cmd.ExecuteReader();
-
-            while (rdr.Read())
+            get
             {
-                College thisCollege = new College();
-                thisCollege.collegeID = Convert.ToInt32(rdr[0]);
-                thisCollege.name = (string)rdr[1];
+                if (instance == null)
+                    instance = new CollegeRepositorySQL();
 
-                colleges.Add(thisCollege);
+                return instance;
+            }
+        }
+
+        public List<College> listAll()
+        {
+            List<College> colleges = new List<College>();
+
+            try
+            {
+                SqlConnection conn = new SqlConnection(connectionString);
+                SqlCommand cmd = new SqlCommand();
+
+                cmd.CommandText = "Select id, name FROM Colleges;";
+                cmd.Connection = conn;
+
+                conn.Open();
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    College thisCollege = new College();
+                    thisCollege.collegeID = Convert.ToInt32(rdr[0]);
+                    thisCollege.name = (string)rdr[1];
+
+                    colleges.Add(thisCollege);
+                }
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+
             }
 
-            conn.Close();
+            return colleges;
         }
-        catch (Exception ex)
-        {
-
-        }
-
-        return colleges;
     }
 }

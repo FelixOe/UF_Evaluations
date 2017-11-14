@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-
-public class Category
+namespace UFEvaluations.Data
 {
-    public int categoryID { get; set; }
-    public string name { get; set; }
+    public class Category
+    {
+        public int categoryID { get; set; }
+        public string name { get; set; }
+    }
 }

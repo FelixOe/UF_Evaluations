@@ -5,56 +5,59 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-public class CategoryRepositorySQL : ICategoryRepository<Category>
+namespace UFEvaluations.Data
 {
-    private static CategoryRepositorySQL instance;
-    private static readonly string connectionString = ConfigurationManager.ConnectionStrings["ConnectionStringSQL"].ConnectionString;
-
-    private CategoryRepositorySQL() { }
-
-    public static CategoryRepositorySQL Instance
+    public class CategoryRepositorySQL : ICategoryRepository<Category>
     {
-        get
+        private static CategoryRepositorySQL instance;
+        private static readonly string connectionString = ConfigurationManager.ConnectionStrings["ConnectionStringSQL"].ConnectionString;
+
+        private CategoryRepositorySQL() { }
+
+        public static CategoryRepositorySQL Instance
         {
-            if (instance == null)
-                instance = new CategoryRepositorySQL();
-
-            return instance;
-        }
-    }
-
-    public List<Category> listAll()
-    {
-        List<Category> categories = new List<Category>();
-
-        try
-        {
-            SqlConnection conn = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand();
-
-            cmd.CommandText = "Select id, name FROM Categories;";
-            cmd.Connection = conn;
-
-            conn.Open();
-
-            SqlDataReader rdr = cmd.ExecuteReader();
-
-            while (rdr.Read())
+            get
             {
-                Category thisCategory = new Category();
-                thisCategory.categoryID = Convert.ToInt32(rdr[0]);
-                thisCategory.name = (string)rdr[1];
+                if (instance == null)
+                    instance = new CategoryRepositorySQL();
 
-                categories.Add(thisCategory);
+                return instance;
+            }
+        }
+
+        public List<Category> listAll()
+        {
+            List<Category> categories = new List<Category>();
+
+            try
+            {
+                SqlConnection conn = new SqlConnection(connectionString);
+                SqlCommand cmd = new SqlCommand();
+
+                cmd.CommandText = "Select id, name FROM Categories;";
+                cmd.Connection = conn;
+
+                conn.Open();
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    Category thisCategory = new Category();
+                    thisCategory.categoryID = Convert.ToInt32(rdr[0]);
+                    thisCategory.name = (string)rdr[1];
+
+                    categories.Add(thisCategory);
+                }
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+
             }
 
-            conn.Close();
+            return categories;
         }
-        catch (Exception ex)
-        {
-
-        }
-
-        return categories;
     }
 }

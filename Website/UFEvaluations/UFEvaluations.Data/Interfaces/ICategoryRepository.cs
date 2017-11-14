@@ -4,7 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-interface ICategoryRepository<T>
+namespace UFEvaluations.Data
 {
-    List<T> listAll();
+    interface ICategoryRepository<T>
+    {
+        List<T> listAll();
+    }
 }

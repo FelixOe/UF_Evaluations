@@ -4,7 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-interface ICollegeRepository<T>
+namespace UFEvaluations.Data
 {
-    List<T> listAll();
+    interface ICollegeRepository<T>
+    {
+        List<T> listAll();
+    }
 }

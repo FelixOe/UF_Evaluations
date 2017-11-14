@@ -5,102 +5,105 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-public class CourseRepositorySQL : ICourseRepository<Course>
+namespace UFEvaluations.Data
 {
-    private static CourseRepositorySQL instance;
-    private static readonly string connectionString = ConfigurationManager.ConnectionStrings["ConnectionStringSQL"].ConnectionString;
-
-    private CourseRepositorySQL() { }
-
-    public static CourseRepositorySQL Instance
+    public class CourseRepositorySQL : ICourseRepository<Course>
     {
-        get
+        private static CourseRepositorySQL instance;
+        private static readonly string connectionString = ConfigurationManager.ConnectionStrings["ConnectionStringSQL"].ConnectionString;
+
+        private CourseRepositorySQL() { }
+
+        public static CourseRepositorySQL Instance
         {
-            if (instance == null)
-                instance = new CourseRepositorySQL();
-
-            return instance;
-        }
-    }
-
-    public List<Course> listAll()
-    {
-        List<Course> courses = new List<Course>();
-
-        try
-        {
-            SqlConnection conn = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand();
-
-            cmd.CommandText = "Select id, name, code, department_id FROM Courses;";
-            cmd.Connection = conn;
-
-            conn.Open();
-
-            SqlDataReader rdr = cmd.ExecuteReader();
-
-            while (rdr.Read())
+            get
             {
-                Course thisCourse = new Course();
-                thisCourse.courseID = Convert.ToInt32(rdr[0]);
-                thisCourse.title = (string)rdr[1];
-                thisCourse.code = (string)rdr[2];
-                thisCourse.departmentID = Convert.ToInt32(rdr[3]);
+                if (instance == null)
+                    instance = new CourseRepositorySQL();
 
-                courses.Add(thisCourse);
+                return instance;
+            }
+        }
+
+        public List<Course> listAll()
+        {
+            List<Course> courses = new List<Course>();
+
+            try
+            {
+                SqlConnection conn = new SqlConnection(connectionString);
+                SqlCommand cmd = new SqlCommand();
+
+                cmd.CommandText = "Select id, name, code, department_id FROM Courses;";
+                cmd.Connection = conn;
+
+                conn.Open();
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    Course thisCourse = new Course();
+                    thisCourse.courseID = Convert.ToInt32(rdr[0]);
+                    thisCourse.title = (string)rdr[1];
+                    thisCourse.code = (string)rdr[2];
+                    thisCourse.departmentID = Convert.ToInt32(rdr[3]);
+
+                    courses.Add(thisCourse);
+                }
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+
             }
 
-            conn.Close();
-        }
-        catch (Exception ex)
-        {
-
+            return courses;
         }
 
-        return courses;
-    }
-
-    public Course getCourseByID(int courseID)
-    {
-        if (courseID < 0)
-            throw new ArgumentOutOfRangeException();
-
-        List<Course> courses = new List<Course>();
-
-        try
+        public Course getCourseByID(int courseID)
         {
-            SqlConnection conn = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand();
+            if (courseID < 0)
+                throw new ArgumentOutOfRangeException();
 
-            cmd.CommandText = "Select id, name, code, department_id FROM Courses WHERE id = @course_id;";
-            cmd.Parameters.AddWithValue("@course_id", courseID);
-            cmd.Connection = conn;
+            List<Course> courses = new List<Course>();
 
-            conn.Open();
-
-            SqlDataReader rdr = cmd.ExecuteReader();
-
-            while (rdr.Read())
+            try
             {
-                Course thisCourse = new Course();
-                thisCourse.courseID = Convert.ToInt32(rdr[0]);
-                thisCourse.title = (string)rdr[1];
-                thisCourse.code = (string)rdr[2];
-                thisCourse.departmentID = Convert.ToInt32(rdr[3]);
+                SqlConnection conn = new SqlConnection(connectionString);
+                SqlCommand cmd = new SqlCommand();
 
-                courses.Add(thisCourse);
+                cmd.CommandText = "Select id, name, code, department_id FROM Courses WHERE id = @course_id;";
+                cmd.Parameters.AddWithValue("@course_id", courseID);
+                cmd.Connection = conn;
+
+                conn.Open();
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    Course thisCourse = new Course();
+                    thisCourse.courseID = Convert.ToInt32(rdr[0]);
+                    thisCourse.title = (string)rdr[1];
+                    thisCourse.code = (string)rdr[2];
+                    thisCourse.departmentID = Convert.ToInt32(rdr[3]);
+
+                    courses.Add(thisCourse);
+                }
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+
             }
 
-            conn.Close();
+            if (courses.Count() == 0)
+                return null;
+
+            return courses.FirstOrDefault();
         }
-        catch (Exception ex)
-        {
-
-        }
-
-        if (courses.Count() == 0)
-            return null;
-
-        return courses.FirstOrDefault();
     }
 }

@@ -3,27 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-public class CategoryRepositoryXML : ICategoryRepository<Category>
+namespace UFEvaluations.Data
 {
-    private static CategoryRepositoryXML instance;
-
-    private CategoryRepositoryXML() { }
-
-    public static CategoryRepositoryXML Instance
+    public class CategoryRepositoryXML : ICategoryRepository<Category>
     {
-        get
+        private static CategoryRepositoryXML instance;
+
+        private CategoryRepositoryXML() { }
+
+        public static CategoryRepositoryXML Instance
         {
-            if (instance == null)
-                instance = new CategoryRepositoryXML();
+            get
+            {
+                if (instance == null)
+                    instance = new CategoryRepositoryXML();
 
-            return instance;
+                return instance;
+            }
         }
-    }
 
-    public List<Category> listAll()
-    {
-        List<Category> categories = new List<Category>();
+        public List<Category> listAll()
+        {
+            List<Category> categories = new List<Category>();
 
-        return categories;
+            return categories;
+        }
     }
 }

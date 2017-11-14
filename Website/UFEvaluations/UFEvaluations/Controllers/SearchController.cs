@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using UFEvaluations.Models;
+using UFEvaluations.Data;
 
 namespace UFEvaluations.Controllers
 {
@@ -94,12 +95,17 @@ namespace UFEvaluations.Controllers
         [HttpPost]
         public JsonResult AutoCompleteSearch(string term)
         {
-            var data = StaticData.searchTerms.Where(p =>
-            GlobalFunctions.escapeQuerystringElement(p.First).Contains(GlobalFunctions.escapeQuerystringElement(term)) ||
-                (p.Second != "" && GlobalFunctions.escapeQuerystringElement(p.Second).Contains(GlobalFunctions.escapeQuerystringElement(term))))
-            .Take(10).Select(p => p.First);
+            if (StaticData.searchTerms != null)
+            {
+                var data = StaticData.searchTerms.Where(p =>
+                GlobalFunctions.escapeQuerystringElement(p.First).Contains(GlobalFunctions.escapeQuerystringElement(term)) ||
+                    (p.Second != "" && GlobalFunctions.escapeQuerystringElement(p.Second).Contains(GlobalFunctions.escapeQuerystringElement(term))))
+                .Take(10).Select(p => p.First);
 
-            return Json(data, JsonRequestBehavior.AllowGet);
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+            else
+                return Json("", JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-interface ICourseRatingRepository<T>
+namespace UFEvaluations.Data
 {
-    List<T> listAllByCategory(int categoryID);
-    List<T> listByCategoryAndSemesters(int categoryID, params string[] semesters);
-    List<T> listByInstructor(int instructorID);
-    List<T> listByCourse(int courseID);
+    interface ICourseRatingRepository<T>
+    {
+        List<T> listAllByCategory(int categoryID);
+        List<T> listByCategoryAndSemesters(int categoryID, params string[] semesters);
+        List<T> listByInstructor(int instructorID);
+        List<T> listByCourse(int courseID);
+    }
 }

@@ -1,4 +1,6 @@
-﻿public class InstructorDomain : Instructor
+﻿using UFEvaluations.Data;
+
+public class InstructorDomain : Instructor
 {
     public string department { get; set; }
     public string rating { get; set; }

@@ -1,4 +1,6 @@
-﻿public class DepartmentDomain : Department
+﻿using UFEvaluations.Data;
+
+public class DepartmentDomain : Department
 {
     public string collegeName { get; set; }
     public string rating { get; set; }

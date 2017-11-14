@@ -4,8 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-interface IDepartmentRepository<T>
+namespace UFEvaluations.Data
 {
-    List<T> listAll();
-    List<T> listByCollege(int collegeID);
+    interface IDepartmentRepository<T>
+    {
+        List<T> listAll();
+        List<T> listByCollege(int collegeID);
+    }
 }
